@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sheep Control - Carneros</title>
+    <title>Sheep Control - Vacunas aplicadas</title>
     <link href="../styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
 
-    <link rel="stylesheet" href="./css/index.css">
+    <!-- <link rel="stylesheet" href="./css/index.css"> -->
 </head>
 
 <body class="sb-nav-fixed">
@@ -90,9 +90,9 @@
                         <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="#">Carneros</a>
+                                <a class="nav-link" href="../Sheep/">Carneros</a>
                                 <a class="nav-link" href="../Vaccine/">Vacunas</a>
-                                <a class="nav-link" href="../VaccineSheep/">Vacunas aplicadas</a>
+                                <a class="nav-link" href="#">Vacunas aplicadas</a>
                             </nav>
                         </div>
 
@@ -116,16 +116,18 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Registro de Carneros</h1>
+                    <h1 class="mt-4">Registro de Vacunas Aplicadas</h1>
                     <ol class="breadcrumb mb-4">
                         <!-- <li class="breadcrumb-item active">Dashboard</li> -->
                     </ol>
-                    <button style="width: 50px;" type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus"></i></button>
+                    <button style="width: 50px;" type="button" class="btn btn-primary mb-1" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"><i class="fas fa-plus"></i></button>
+                        <button style="width: 50px;" type="button" class="btn btn-danger" onclick="deleteAll()"><i class="fas fa-trash-alt"></i></button>
                     <div class="card mb-4">
-                        
+
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Carneros
+                            Vacunas aplicadas
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -133,24 +135,25 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Descripción</th>
+                                            <th>Descripción del carnero</th>
                                             <th>Peso</th>
-                                            <th>Sexo</th>
-                                            <th>Photo</th>
-                                            <th>Fecha de nacimiento</th>
+                                            <th>Nombre de la vacuna</th>
+                                            <th>Dosis indicada</th>
+                                            <th>Dosis aplicada</th>
+                                            <th>Fecha de aplicación</th>
                                             <th>Fecha de registro</th>
                                             <th>Fecha de última modificación</th>
                                             <th>Activo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="sheepTable">
+                                    <tbody id="vaccineSheepTable">
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
+               
                     <section id="modalCreate">
                         <!-- Modal Create-->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -158,42 +161,27 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Registro</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Aplicar vacunas a todos</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form id="createForm" action="#">
                                             <div class="form-group">
-                                                <label for="birthDate">Birth Date:</label>
-                                                <input type="date" class="form-control" id="birthDate" name="birthDate">
+                                                <label for="applicationDate">Fecha de aplicación:</label>
+                                                <input type="date" class="form-control" id="applicationDate" name="applicationDate">
                                             </div>
                                             <div class="form-group">
-                                                <label for="weight">Weight:</label>
-                                                <input type="number" step="0.01" class="form-control" id="weight"
-                                                    name="weight">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <textarea class="form-control" id="description"
-                                                    name="description"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="sex">Sex:</label>
-                                                <select class="form-control" id="sex" name="sex">
-                                                    <option value="macho">Macho</option>
-                                                    <option value="hembra">Hembra</option>
+                                                <label for="sex">Vacuna:</label>
+                                                <select class="form-control" id="vaccineId" name="vaccineId">
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="photo">Photo:</label>
-                                                <input accept="image/jpeg" type="file" class="form-control" id="photo"
-                                                    name="photo">
-                                                <p>Foto seleccionada</p>
-                                                <img class="img" width="100px" id="currentSelectedPhoto">
-                                            </div>
+                                            <div id="vaccineResume"></div>
                                             <p id="error" class="danger"></p>
                                         </form>
+                                        <div class="form-group">
+                                            <button id="showResumeVaccines" class="form-control btn btn-success">Ver resumen</button>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -220,72 +208,20 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="updateForm" action="#">
-                                            <div class="form-group">
-                                                <label for="birthDate">Birth Date:</label>
-                                                <input type="date" class="form-control" id="birthDate" name="birthDate">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="weight">Weight:</label>
-                                                <input type="number" step="0.01" class="form-control" id="weight"
-                                                    name="weight">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <textarea class="form-control" id="description"
-                                                    name="description"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="sex">Sex:</label>
-                                                <select class="form-control" id="sex" name="sex">
-                                                    <option value="macho">Macho</option>
-                                                    <option value="hembra">Hembra</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="photo">Photo:</label>
-                                                <input accept="image/jpeg" type="file" class="form-control" id="photo"
-                                                    name="photo">
-                                                <p>Foto actual</p>
-                                                <img class="img" width="100px" id="currentPhoto">
-                                                <p>Foto seleccionada</p>
-                                                <img class="img" width="100px" id="currentSelectedPhoto">
-                                            </div>
-                                            <p id="error" class="danger"></p>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="updateForm"
-                                            value="Guardar" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="modalAsignVaccine">
-                        <!-- Modal Create-->
-                        <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel3">Aplicar vacuna</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="asignVaccineForm" action="#">
+                    
                                             <div class="form-group">
                                                 <label for="applicationDate">Fecha de aplicación:</label>
                                                 <input type="date" class="form-control" id="applicationDate" name="applicationDate">
                                             </div>
                                             <div class="form-group">
-                                                <label for="sex">Vacuna:</label>
-                                                <select class="form-control" id="vaccineId" name="vaccineId">
-                                                    
-                                                </select>
+                                                <label for="indicatedDose">Dosis indicada:</label>
+                                                <input disabled   type="text" class="form-control" id="indicatedDose"
+                                                    name="indicatedDose">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="indicatedDoseToApply">Dosis recomendada para aplicar:</label>
+                                                <input disabled   type="text" class="form-control" id="indicatedDoseToApply"
+                                                    name="indicatedDoseToApply">
                                             </div>
                                             <div class="form-group">
                                                 <label for="doseApplied">Dosis aplicada:</label>
@@ -298,7 +234,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="asignVaccineForm"
+                                        <input type="submit" class="btn btn-primary" form="updateForm"
                                             value="Guardar" />
                                     </div>
                                 </div>
@@ -336,7 +272,6 @@
     <script src="./js/create.js"></script>
     <script src="./js/update.js"></script>
     <script src="./js/delete.js"></script>
-    <script src="./js/asignVaccine.js"></script>
 </body>
 
 </html>

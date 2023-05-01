@@ -37,8 +37,19 @@ asignVaccineForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     data = {
         vaccineId: e.target.vaccineId.value,
+        sheepId: sheepIdToApplyVaccine,
         applicationDate: e.target.applicationDate.value,
         doseApplied: e.target.doseApplied.value
     }
-    console.log(data)
+    fetchRequest(urlVaccineSheep, { method: 'POST', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
+      }}, function (error, data) {
+        if (error) {
+            showMessage("error","Mensaje","Ocurrió un error al registrar")
+            console.log(error);
+        } else {
+            showMessage("success","Mensaje","Registro creado")
+            console.log(data.data)
+            asignVaccineForm.reset()
+        }
+    });
 })

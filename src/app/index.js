@@ -61,9 +61,9 @@ function formatDate(fechaString,setHora) {
     let amPm = fecha.getHours() >= 12 ? 'PM' : 'AM';
 
     if(setHora){
-       return fechaFormateada = `${parseInt(dia)+1}/${mes}/${anio} ${hora}:${minutos}:${segundos} ${amPm}`;
+       return fechaFormateada = `${dia}/${mes}/${anio} ${hora}:${minutos}:${segundos} ${amPm}`;
     }else{
-        return fechaFormateada = `${parseInt(dia)+1}/${mes}/${anio}`;
+        return fechaFormateada = `${dia}/${mes}/${anio}`;
     }
      
 
@@ -76,6 +76,10 @@ function findInArray(array,id){
         return elemento.id == id;
     });
     return find
+}
+function foliator(myString,lenght){
+    myString = myString.padStart(lenght, '0');
+    return myString
 }
 function showMessage(type,title,message){
     switch (type) {
