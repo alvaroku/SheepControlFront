@@ -7,20 +7,61 @@ allSheeps = []
 allVaccines = []
 objToUpdate = null
 
-
-fetchRequest(urlVaccineSheep, { method: 'GET' }, function (error, data) {
-    if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
-        console.log(error);
-    } else {
-        document.getElementById("error").innerHTML = ""
-        allData = data
-        data.forEach(element => {
-            tds = createVaccineSheepTds(element)
-            table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
-        });
+filterCriteriaForm.addEventListener("submit",(e)=>{
+    e.preventDefault()
+    startDate = e.target.startDate.value
+    finishDate = e.target.finishDate.value
+    vaccineId = e.target.vaccineId.value
+    sheepId = e.target.sheepId.value
+    if(!finishDate || !startDate){
+        showMessage("error","Error","Seleccione el rango de fechas")
+        return
     }
-});
+    objeto = {
+        startDate:startDate,
+        finishDate:finishDate,
+        sheepId:sheepId,
+        vaccineId:vaccineId
+    }
+    newUrl = urlVaccineSheep+"GetVaccineSheepWithFilters"
+    fetchRequest(newUrl, { method: 'POST',body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
+}}, function (error, data) {
+        if (error) {
+            showMessage("error","Mensaje","Error al cargar los datos")
+            console.log(error);
+        } else {
+            table.innerHTML = ""
+            document.getElementById("error").innerHTML = ""
+            allData = data
+            data.forEach(element => {
+                tds = createVaccineSheepTds(element)
+                table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
+            });
+        }
+    });
+})
+cleanFilters.addEventListener("click",(e)=>{
+    filterCriteriaForm.reset()
+    getAllVaccineSheep()
+    e.preventDefault()
+})
+getAllVaccineSheep()
+function getAllVaccineSheep(){
+    fetchRequest(urlVaccineSheep, { method: 'GET' }, function (error, data) {
+        if (error) {
+            showMessage("error","Mensaje","Error al cargar los datos")
+            console.log(error);
+        } else {
+            table.innerHTML = ""
+            document.getElementById("error").innerHTML = ""
+            allData = data
+            data.forEach(element => {
+                tds = createVaccineSheepTds(element)
+                table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
+            });
+        }
+    });
+}
 //getVaccines
 fetchRequest(urlVaccine, { method: 'GET' }, function (error, data) {
     if (error) {
@@ -29,11 +70,14 @@ fetchRequest(urlVaccine, { method: 'GET' }, function (error, data) {
     } else {
         allVaccines = data
         options = ""
+        options += `<option disabled selected value="0">Seleccione un dato</option>`
         data.forEach(element => {
             indicatedDose = getIndicatedDoseString(element.indicatedDose)
+
             options += `<option value="${element.id}">${element.name}. (${indicatedDose})</option>`
         });
         createForm.vaccineId.innerHTML = options  
+        filterCriteriaForm.vaccineId.innerHTML = options
     }
 });
 //getSheeps
@@ -43,9 +87,26 @@ fetchRequest(urlSheep, { method: 'GET' }, function (error, data) {
         console.log(error);
     } else {
         allSheeps = data
+
+        options = ""
+        options += `<option disabled selected value="0">Seleccione un dato</option>`
+        data.forEach(element => {
+            options += `<option value="${element.id}">${element.id}</option>`
+        }); 
+        filterCriteriaForm.sheepId.innerHTML = options
     }
 });
-showResumeVaccines.addEventListener('click',(e)=>{
+createForm.vaccineId.addEventListener('change',(e)=>{
+    vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
+})
+btnApplyVaccineToAllSheeps.addEventListener('click',(e)=>{
+    vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
+})
+ function clearResume(){
+    vaccineResume.innerHTML = ``
+ }
+
+function getResumeVaccines(){
     currentVaccineId = createForm.vaccineId.value
     currentVaccine = findInArray(allVaccines,currentVaccineId)
     cadena = ""
@@ -54,9 +115,8 @@ showResumeVaccines.addEventListener('click',(e)=>{
         appliedDose = calculateDoseRecomended(currentVaccine.indicatedDose,element.weight)
         cadena += `Carnero ${foliator(element.id+"",lengthFolio)}(${element.weight}Kg) -> ${appliedDose} <br>`
     });
-    vaccineResume.innerHTML = `<p class="alert alert-primary">${cadena}</p>`
-
-})
+    return cadena
+}
 function calculateDoseRecomended(indicatedDose,weight){
     quantityVolume = indicatedDose.split("/")[0].split("|")[0]
     unitVolume = indicatedDose.split("/")[0].split("|")[1]
