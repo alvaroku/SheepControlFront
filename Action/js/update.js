@@ -11,8 +11,7 @@ function update(id) {
                 
             }
 
-            fetchRequest(urlAction + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
-        } }, function (error, data) {
+            fetchRequest(urlAction + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);

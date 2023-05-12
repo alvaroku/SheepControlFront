@@ -29,8 +29,8 @@
             formData.append('weight', e.target.weight.value);
             formData.append('description', e.target.description.value);
             formData.append('sex', e.target.sex.value);
-
-            fetchRequest(urlSheep, { method: 'POST', body: formData }, function (error, data) {
+            
+            fetchRequest(urlSheep, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error);

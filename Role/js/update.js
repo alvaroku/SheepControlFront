@@ -11,14 +11,14 @@ function update(id) {
                 
             }
 
-            fetchRequest(urlController + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+            fetchRequest(urlRole + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);
                 } else {
                     tr = document.getElementById(data.data.id)
 
-                    tr.innerHTML = createControllerTds(data.data)
+                    tr.innerHTML = createActionTds(data.data)
                     
                     objToUpdate = null
                     updateForm.reset()

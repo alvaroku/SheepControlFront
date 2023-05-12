@@ -6,7 +6,7 @@ allData = []
 
 objToUpdate = null
 
-fetchRequest(urlVaccine, { method: 'GET' }, function (error, data) {
+fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);

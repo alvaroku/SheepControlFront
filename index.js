@@ -27,11 +27,21 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 function fetchRequest(url, options, callback) {
+    
     fetch(url, options)
         .then(response => {
             
             if (!response.ok) {
-                console.log(response.json())
+                response.json().then(w=>{
+                    if(w.title){
+                      console.log(w.title)
+                      showMessage("error","Error",w.title)
+                    }
+                    if(w.message){
+                      console.log(w.message)
+                      showMessage("error","Error",w.message)
+                    }
+                  })
                 throw new Error(response.status);
             }
             return response.json();
@@ -111,3 +121,40 @@ function deleteToArray(array,id){
     array = array.filter(obj => obj.id !== id);
     return array
 }
+    
+function setInfoUSer(user){
+    userInfo.innerHTML = `
+        ${user.email}
+    `
+}
+function deleteInfoUSer(){
+    userInfo.innerHTML = ""
+}
+verifyLogin()
+
+function verifyLogin(){
+    if(getCookie("auth")){
+        data = {
+            token:getCookie("auth")
+        }
+        fetchRequest(urlUser+"GetEmailFromToken", { method: 'POST', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+            if (error) {
+                window.location = "/"
+            } else {
+                if(data.data){
+                    setInfoUSer(data.data)
+                    console.log(data)
+                    //console.log(data)
+                    //showMessage("success","Mensaje",`logueado como: ${data.data.email}`)
+                }else{
+                   // window.location = "/"
+                   deleteCookie("auth")
+                }
+            }
+        });
+    }
+}
+logout.addEventListener("click", ()=>{
+    deleteCookie("auth")
+    deleteInfoUSer()
+})

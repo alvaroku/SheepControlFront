@@ -1,6 +1,6 @@
 function Delete(id) {
     if (!confirm("Desea eliminar el registro?")) return
-    fetchRequest(urlVaccine + id, { method: 'DELETE' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+    fetchRequest(urlPermissionRole + id, { method: 'DELETE' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al eliminar")
         } else {
@@ -9,5 +9,4 @@ function Delete(id) {
             allData = deleteToArray(allData,id)
         }
     });
-
 }

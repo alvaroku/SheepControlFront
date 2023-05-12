@@ -1,12 +1,12 @@
-table = document.getElementById("permissionTable")
+table = document.getElementById("roleUserTable")
 updateForm = document.getElementById("updateForm")
 createForm = document.getElementById("createForm")
 allData = []
-allControllers = []
-allActions = []
+allUsers = []
+allRoles = []
 objToUpdate = null
 
-fetchRequest(urlPermission, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+fetchRequest(urlRoleUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
@@ -15,46 +15,44 @@ fetchRequest(urlPermission, { method: 'GET' ,headers:{"Authorization": `Bearer $
         document.getElementById("error").innerHTML = ""
         allData = data
         data.forEach(element => {
-            tds = createPermissionTds(element)
+            tds = createRoleUserTds(element)
             table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
         });
     }
 });
-fetchRequest(urlController, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+fetchRequest(urlUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
-        table.innerHTML = ""
         document.getElementById("error").innerHTML = ""
-        allControllers = data
+        allUser = data
+        options = ""
+        options += `<option disabled selected value="0">Seleccione un dato</option>`
+        data.forEach(element => {
+            options += `<option value="${element.id}">${element.name} ${element.lastName}</option>`
+        });
+        createForm.userId.innerHTML = options  
+        updateForm.userId.innerHTML = options  
+    }
+});
+fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+    if (error) {
+        showMessage("error","Mensaje","Error al cargar los datos")
+        console.log(error);
+    } else {
+        document.getElementById("error").innerHTML = ""
+        allRoles = data
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
         data.forEach(element => {
             options += `<option value="${element.id}">${element.name}</option>`
         });
-        createForm.controllerId.innerHTML = options  
-        updateForm.controllerId.innerHTML = options  
+        createForm.roleId.innerHTML = options  
+        updateForm.roleId.innerHTML = options  
     }
 });
-fetchRequest(urlAction, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
-    if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
-        console.log(error);
-    } else {
-        table.innerHTML = ""
-        document.getElementById("error").innerHTML = ""
-        allActions = data
-        options = ""
-        options += `<option disabled selected value="0">Seleccione un dato</option>`
-        data.forEach(element => {
-            options += `<option value="${element.id}">${element.name}</option>`
-        });
-        createForm.actionId.innerHTML = options  
-        updateForm.actionId.innerHTML = options  
-    }
-});
-function createPermissionTds(data) {
+function createRoleUserTds(data) {
     creationDate = formatDate(data.creationDate,true)
     modificationDate = formatDate(data.modificationDate,true)
 
@@ -65,10 +63,8 @@ function createPermissionTds(data) {
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
     }
     tr = `<td>${data.id}</td> 
-        <td>${data.clave}</td>  
-        <td>${data.description}</td>
-        <td>${data.controller.name}</td>
-        <td>${data.action.name}</td>
+        <td>${data.role.name}</td> 
+        <td>${data.user.name} ${data.user.lastName}</td>
         <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>

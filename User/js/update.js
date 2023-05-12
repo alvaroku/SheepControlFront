@@ -2,23 +2,33 @@
 function update(id) {
     objToUpdate = findInArray(allData,id)
     updateForm.name.value = objToUpdate.name
+    updateForm.lastName.value = objToUpdate.lastName
+    updateForm.birthDate.value = objToUpdate.birthDate.substring(0, 10)
+    updateForm.phoneNumber.value = objToUpdate.phoneNumber
+    updateForm.email.value = objToUpdate.email
+    updateForm.password.value = objToUpdate.password
 }
         updateForm.addEventListener("submit", (e) => {
             e.preventDefault()
 
             data = {
-                name: e.target.name.value,
-                
+                name:updateForm.name.value,
+                lastName:updateForm.lastName.value,
+                birthDate:updateForm.birthDate.value,
+                phoneNumber:updateForm.phoneNumber.value,
+                email:updateForm.email.value,
+                password:updateForm.password.value
             }
-
-            fetchRequest(urlController + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+        
+            fetchRequest(urlUser + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
+        ,"Authorization": `Bearer ${getCookie("auth")}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);
                 } else {
                     tr = document.getElementById(data.data.id)
 
-                    tr.innerHTML = createControllerTds(data.data)
+                    tr.innerHTML = createUserTds(data.data)
                     
                     objToUpdate = null
                     updateForm.reset()

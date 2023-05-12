@@ -4,7 +4,7 @@ createForm = document.getElementById("createForm")
 allData = []
 objToUpdate = null
 
-fetchRequest(urlController, { method: 'GET' }, function (error, data) {
+fetchRequest(urlController, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);

@@ -47,7 +47,7 @@ cleanFilters.addEventListener("click",(e)=>{
 })
 getAllVaccineSheep()
 function getAllVaccineSheep(){
-    fetchRequest(urlVaccineSheep, { method: 'GET' }, function (error, data) {
+    fetchRequest(urlVaccineSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
@@ -63,7 +63,7 @@ function getAllVaccineSheep(){
     });
 }
 //getVaccines
-fetchRequest(urlVaccine, { method: 'GET' }, function (error, data) {
+fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
@@ -81,7 +81,7 @@ fetchRequest(urlVaccine, { method: 'GET' }, function (error, data) {
     }
 });
 //getSheeps
-fetchRequest(urlSheep, { method: 'GET' }, function (error, data) {
+fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);

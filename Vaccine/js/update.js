@@ -63,8 +63,8 @@ function update(id) {
             formData.append('indicatedDose', indicatedDose);
             formData.append('description', e.target.description.value);
             formData.append('photo', objToUpdate.photo);
-
-            fetchRequest(urlVaccine + objToUpdate.id, { method: 'PUT', body: formData }, function (error, data) {
+            
+            fetchRequest(urlVaccine + objToUpdate.id, { method: 'PUT', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);

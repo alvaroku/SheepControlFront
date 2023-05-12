@@ -1,10 +1,10 @@
-table = document.getElementById("actionTable")
+table = document.getElementById("roleTable")
 updateForm = document.getElementById("updateForm")
 createForm = document.getElementById("createForm")
 allData = []
 objToUpdate = null
 
-fetchRequest(urlAction, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);

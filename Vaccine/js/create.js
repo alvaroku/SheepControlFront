@@ -36,8 +36,8 @@
             formData.append('name', e.target.name.value);
             formData.append('indicatedDose', indicatedDose);
             formData.append('description', e.target.description.value);
-
-            fetchRequest(urlVaccine, { method: 'POST', body: formData }, function (error, data) {
+            
+            fetchRequest(urlVaccine, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error)
