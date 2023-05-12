@@ -8,7 +8,7 @@ loginForm.addEventListener("submit",(e)=>{
 }}, function (error, data) {
         if (error) {
             console.log(error);
-            deleteCookie("auth")
+            //deleteCookie("auth")
         } else {
             document.cookie = "auth="+data.data.token;
             showMessage("success","Mensaje",`logueado como: ${data.data.email}`)

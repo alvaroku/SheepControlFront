@@ -24,8 +24,7 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
         vaccineId:vaccineId
     }
     newUrl = urlVaccineSheep+"GetVaccineSheepWithFilters"
-    fetchRequest(newUrl, { method: 'POST',body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
-}}, function (error, data) {
+    fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
