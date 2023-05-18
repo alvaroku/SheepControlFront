@@ -12,8 +12,7 @@ loginForm.addEventListener("submit",(e)=>{
         } else {
             document.cookie = "auth="+data.data.token;
             showMessage("success","Mensaje",`logueado como: ${data.data.email}`)
-            setInfoUSer(data.data)
-            loginForm.reset()
+            window.location.href = "/index.html"
         }
     });
 

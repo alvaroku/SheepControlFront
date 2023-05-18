@@ -37,6 +37,7 @@ fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${ge
     } else {
         allVaccines = data
         options = ""
+        options += `<option disabled selected value="0">Seleccione un dato</option>`
         data.forEach(element => {
             indicatedDose = getIndicatedDoseString(element.indicatedDose)
             options += `<option value="${element.id}">${element.name}. (${indicatedDose})</option>`
@@ -52,10 +53,13 @@ function createSheepTds(sheep) {
     modificationDate = formatDate(sheep.modificationDate,true)
     birthDate = formatDate(sheep.birthDate,false)
     auxActive = ""
+    toggle = ""
     if(sheep.active){
         auxActive = '<span class="badge rounded-pill bg-success">Activo</span>'
+        toggle = `<input onclick="toggleActive(event,${sheep.id})" class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault">`
     }else{
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
+        toggle = `<input onclick="toggleActive(event,${sheep.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${sheep.id}</td> 
           <td>${sheep.description}</td>
@@ -71,7 +75,7 @@ function createSheepTds(sheep) {
             <button onclick="update(${sheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" onclick="Delete(${sheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                ${toggle}
             </div>
           </td>`
     return tr

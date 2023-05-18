@@ -89,3 +89,34 @@ function update(id) {
             });
 
         })
+
+        function toggleActive(event,id){
+
+            fetchRequest(urlRole+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+                if (error) {
+                    showMessage("error","Mensaje","Error al actualizar")
+                    event.preventDefault()
+                } else {
+                    tr = document.getElementById(id)
+                    
+                    dataToogle = findInArray(allSheeps,id)
+                    dataToogle.active = data.data
+        
+                    imgSrc = document.getElementById("img-"+id).src
+
+                    tr.innerHTML = createSheepTds(dataToogle)
+        
+                    document.getElementById("img-"+id).src = imgSrc
+
+                    let index = allSheeps.findIndex(obj => obj.id === id); // busca el objeto con id 3 y devuelve su posición en el array
+        
+                    if (index !== -1) { // si el objeto se encontró en el array
+                        allSheeps[index] = dataToogle; // asigna el nuevo objeto en su posición
+                    }
+        
+                    showMessage("success","Mensaje","Registro actualizado")
+        
+                }
+            });
+            
+        }

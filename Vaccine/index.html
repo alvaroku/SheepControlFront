@@ -29,7 +29,7 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar por nombre" aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
@@ -134,7 +134,7 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Descripción</th>
+                                            <th>Observaciones</th>
                                             <th>Nombre</th>
                                             <th>Dosis Indicada</th>
                                             <th>Photo</th>
@@ -169,15 +169,15 @@
                                                 <input type="text" class="form-control" id="name" name="Name">
                                             </div>
                                             <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <input type="text" class="form-control" id="description"
-                                                    name="Description">
+                                                <label for="observations">Obsevaciones:</label>
+                                                <input type="text" class="form-control" id="observations"
+                                                    name="observations">
                                             </div>
                                             Dosis
                                             <div class="form-group">
                                                 <label for="indicatedDoseVolume">Cantidad:</label>
-                                                <input type="number" step="0.01" class="form-control" id="indicatedDoseVolume"
-                                                    name="indicatedDoseVolume">
+                                                <input type="number" step="0.01" class="form-control"
+                                                    id="indicatedDoseVolume" name="indicatedDoseVolume">
                                             </div>
                                             <div class="form-group">
                                                 <label for="unitDoseVolume">Unidad:</label>
@@ -186,11 +186,11 @@
                                                     <option value="mg">mg</option>
                                                 </select>
                                             </div>
-                                            Por cada 
+                                            Por cada
                                             <div class="form-group">
                                                 <label for="indicatedDoseWeight">Cantidad:</label>
-                                                <input type="number" step="0.01" class="form-control" id="indicatedDoseWeight"
-                                                    name="indicatedDoseWeight">
+                                                <input type="number" step="0.01" class="form-control"
+                                                    id="indicatedDoseWeight" name="indicatedDoseWeight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="unitDoseWeight">Unidad:</label>
@@ -239,15 +239,15 @@
                                                 <input type="text" class="form-control" id="name" name="Name">
                                             </div>
                                             <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <input type="text" class="form-control" id="description"
-                                                    name="Description">
+                                                <label for="observations">Observaciones:</label>
+                                                <input type="text" class="form-control" id="observations"
+                                                    name="observations">
                                             </div>
                                             Dosis
                                             <div class="form-group">
                                                 <label for="indicatedDoseVolume">Cantidad:</label>
-                                                <input type="number" step="0.01" class="form-control" id="indicatedDoseVolume"
-                                                    name="indicatedDoseVolume">
+                                                <input type="number" step="0.01" class="form-control"
+                                                    id="indicatedDoseVolume" name="indicatedDoseVolume">
                                             </div>
                                             <div class="form-group">
                                                 <label for="unitDoseVolume">Unidad:</label>
@@ -256,11 +256,11 @@
                                                     <option value="mg">mg</option>
                                                 </select>
                                             </div>
-                                            Por cada 
+                                            Por cada
                                             <div class="form-group">
                                                 <label for="indicatedDoseWeight">Cantidad:</label>
-                                                <input type="number" step="0.01" class="form-control" id="indicatedDoseWeight"
-                                                    name="indicatedDoseWeight">
+                                                <input type="number" step="0.01" class="form-control"
+                                                    id="indicatedDoseWeight" name="indicatedDoseWeight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="unitDoseWeight">Unidad:</label>
@@ -323,9 +323,22 @@
     <script src="./js/update.js"></script>
     <script src="./js/delete.js"></script>
     <script>
-        if(!getCookie("auth")){
-    window.location = "/"
-}
+        if (!getCookie("auth")) {
+            window.location = "/"
+        }
+        searcher.addEventListener("keyup", (e) => {
+            dataFitered = allData.filter(objeto => (objeto.name).includes(e.target.value));
+
+            allData.forEach(element => {
+                d = findInArray(dataFitered,element.id)
+                if(d==undefined){
+                    document.getElementById(element.id).style.display = "none"
+                }else{
+                    document.getElementById(element.id).style.display = ""
+                }     
+            });
+       
+        })
     </script>
 </body>
 

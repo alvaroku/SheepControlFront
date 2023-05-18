@@ -25,8 +25,6 @@ fetchRequest(urlController, { method: 'GET' ,headers:{"Authorization": `Bearer $
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
-        table.innerHTML = ""
-        document.getElementById("error").innerHTML = ""
         allControllers = data
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
@@ -42,8 +40,6 @@ fetchRequest(urlAction, { method: 'GET' ,headers:{"Authorization": `Bearer ${get
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
-        table.innerHTML = ""
-        document.getElementById("error").innerHTML = ""
         allActions = data
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
@@ -59,10 +55,13 @@ function createPermissionTds(data) {
     modificationDate = formatDate(data.modificationDate,true)
 
     auxActive = ""
+    toggle = ""
     if(data.active){
         auxActive = '<span class="badge rounded-pill bg-success">Activo</span>'
+        toggle = `<input onclick="toggleActive(event,${data.id})" class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault">`
     }else{
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
+        toggle = `<input onclick="toggleActive(event,${data.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${data.id}</td> 
         <td>${data.clave}</td>  
@@ -76,7 +75,7 @@ function createPermissionTds(data) {
             <button onclick="update(${data.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" onclick="Delete(${data.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                ${toggle}
             </div>
           </td>`
     return tr

@@ -14,7 +14,7 @@ function update(id) {
 
 
     updateForm.name.value = objToUpdate.name
-    updateForm.description.value = objToUpdate.description
+    updateForm.observations.value = objToUpdate.observations
     updateForm.indicatedDoseVolume.value = quantityVolume
     updateForm.unitDoseVolume.value = unitVolume
     updateForm.indicatedDoseWeight.value = quantityWeight
@@ -61,7 +61,7 @@ function update(id) {
             formData.append('imageFile', file);
             formData.append('name', e.target.name.value);
             formData.append('indicatedDose', indicatedDose);
-            formData.append('description', e.target.description.value);
+            formData.append('observations', e.target.observations.value);
             formData.append('photo', objToUpdate.photo);
             
             fetchRequest(urlVaccine + objToUpdate.id, { method: 'PUT', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
@@ -106,3 +106,34 @@ function update(id) {
             });
 
         })
+    
+        function toggleActive(event,id){
+
+            fetchRequest(urlRole+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+                if (error) {
+                    showMessage("error","Mensaje","Error al actualizar")
+                    event.preventDefault()
+                } else {
+                    tr = document.getElementById(id)
+                    
+                    dataToogle = findInArray(allData,id)
+                    dataToogle.active = data.data
+        
+                    imgSrc = document.getElementById("img-"+id).src
+
+                    tr.innerHTML = createVaccineTds(dataToogle)
+        
+                    document.getElementById("img-"+id).src = imgSrc
+        
+                    let index = allData.findIndex(obj => obj.id === id); // busca el objeto con id 3 y devuelve su posición en el array
+        
+                    if (index !== -1) { // si el objeto se encontró en el array
+                        allData[index] = dataToogle; // asigna el nuevo objeto en su posición
+                    }
+        
+                    showMessage("success","Mensaje","Registro actualizado")
+        
+                }
+            });
+            
+        }

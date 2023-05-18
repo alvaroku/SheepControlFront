@@ -9,22 +9,23 @@ objToUpdate = null
 
 filterCriteriaForm.addEventListener("submit",(e)=>{
     e.preventDefault()
-    startDate = e.target.startDate.value
-    finishDate = e.target.finishDate.value
+    _startDate = e.target.startDate.value
+    _finishDate = e.target.finishDate.value
     vaccineId = e.target.vaccineId.value
     sheepId = e.target.sheepId.value
+
     if(!finishDate || !startDate){
         showMessage("error","Error","Seleccione el rango de fechas")
         return
     }
     objeto = {
-        startDate:startDate,
-        finishDate:finishDate,
+        startDate:_startDate,
+        finishDate:_finishDate,
         sheepId:sheepId,
         vaccineId:vaccineId
     }
     newUrl = urlVaccineSheep+"GetVaccineSheepWithFilters"
-    fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+    fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
@@ -93,26 +94,60 @@ fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getC
             options += `<option value="${element.id}">${element.id}</option>`
         }); 
         filterCriteriaForm.sheepId.innerHTML = options
+        createForm.sheepId.innerHTML = options
     }
 });
 createForm.vaccineId.addEventListener('change',(e)=>{
-    vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
+    createForm.sheepId.disabled = false
+    createForm.checkAll.disabled = false
+})
+createForm.checkAll.addEventListener('change',(e)=>{
+    selectElement = createForm.sheepId
+    selectedValues = [];
+    if(e.target.checked){
+        selectElement.options[0].selected = false;
+        for (var i = 1; i < selectElement.options.length; i++) {
+            option = selectElement.options[i];  
+            option.selected = true
+            selectedValues.push(parseInt(option.value));
+        }
+        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines(selectedValues)}</p>`
+    }else{
+        selectElement.options[0].selected = true;
+        for (var i = 1; i < selectElement.options.length; i++) {
+            option = selectElement.options[i];  
+            option.selected = false
+        }
+        vaccineResume.innerHTML = ""
+    }
+})
+createForm.sheepId.addEventListener('change',(e)=>{
+    selectElement = createForm.sheepId
+    selectedValues = [];
+    for (var i = 1; i < selectElement.options.length; i++) {
+      option = selectElement.options[i];
+      if (option.selected) {
+        selectedValues.push(parseInt(option.value));
+      }
+    }
+    if(selectedValues.length == allSheeps.length){checkAll.checked=true}else{checkAll.checked=false}
+    vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines(selectedValues)}</p>`
 })
 btnApplyVaccineToAllSheeps.addEventListener('click',(e)=>{
-    vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
+    //vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
 })
  function clearResume(){
     vaccineResume.innerHTML = ``
  }
 
-function getResumeVaccines(){
+function getResumeVaccines(sheepIds){
     currentVaccineId = createForm.vaccineId.value
     currentVaccine = findInArray(allVaccines,currentVaccineId)
     cadena = ""
-    allSheeps.forEach(element => {
-        //console.log(element)
-        appliedDose = calculateDoseRecomended(currentVaccine.indicatedDose,element.weight)
-        cadena += `Carnero ${foliator(element.id+"",lengthFolio)}(${element.weight}Kg) -> ${appliedDose} <br>`
+    sheepIds.forEach(element => {
+        sheep = findInArray(allSheeps,element)
+        appliedDose = calculateDoseRecomended(currentVaccine.indicatedDose,sheep.weight)
+        cadena += `Carnero ${foliator(sheep.id+"",lengthFolio)}(${sheep.weight}Kg) -> ${appliedDose} <br>`
     });
     return cadena
 }
@@ -150,10 +185,13 @@ function createVaccineSheepTds(vaccineSheep) {
     indicatedDose = `${quantityVolume+" "+unitVolume} por cada ${quantityWeight+" "+unitWeight}`
 
     auxActive = ""
+    toggle = ""
     if(vaccineSheep.active){
         auxActive = '<span class="badge rounded-pill bg-success">Activo</span>'
+        toggle = `<input onclick="toggleActive(event,${vaccineSheep.id})" class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault">`
     }else{
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
+        toggle = `<input onclick="toggleActive(event,${vaccineSheep.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${vaccineSheep.id}</td> 
           <td>${vaccineSheep.sheep.description}</td>
@@ -169,7 +207,7 @@ function createVaccineSheepTds(vaccineSheep) {
             <button onclick="update(${vaccineSheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" onclick="Delete(${vaccineSheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                ${toggle}
             </div>
           </td>`
     return tr

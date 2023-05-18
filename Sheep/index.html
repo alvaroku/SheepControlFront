@@ -27,12 +27,11 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <form id="searcherForm" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+                <input class="form-control" id="searcher" type="text" placeholder="Buscar por folio"
+                    aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnSearch" type="button"><i class="fas fa-search"></i></button>
             </div>
         </form>
         <!-- Navbar-->
@@ -120,9 +119,10 @@
                     <ol class="breadcrumb mb-4">
                         <!-- <li class="breadcrumb-item active">Dashboard</li> -->
                     </ol>
-                    <button style="width: 50px;" type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus"></i></button>
+                    <button style="width: 50px;" type="button" class="btn btn-primary mb-1" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"><i class="fas fa-plus"></i></button>
                     <div class="card mb-4">
-                        
+
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
                             Carneros
@@ -279,17 +279,18 @@
                                         <form id="asignVaccineForm" action="#">
                                             <div class="form-group">
                                                 <label for="applicationDate">Fecha de aplicación:</label>
-                                                <input type="date" class="form-control" id="applicationDate" name="applicationDate">
+                                                <input type="date" class="form-control" id="applicationDate"
+                                                    name="applicationDate">
                                             </div>
                                             <div class="form-group">
                                                 <label for="sex">Vacuna:</label>
                                                 <select class="form-control" id="vaccineId" name="vaccineId">
-                                                    
+
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="doseApplied">Dosis aplicada:</label>
-                                                <input type="text" class="form-control" id="doseApplied"
+                                                <input disabled type="text" class="form-control" id="doseApplied"
                                                     name="doseApplied">
                                             </div>
                                             <p id="error" class="danger"></p>
@@ -338,9 +339,23 @@
     <script src="./js/delete.js"></script>
     <script src="./js/asignVaccine.js"></script>
     <script>
-        if(!getCookie("auth")){
-    window.location = "/"
-}
+        if (!getCookie("auth")) {
+            window.location = "/"
+        }
+
+        searcher.addEventListener("keyup", (e) => {
+            dataFitered = allSheeps.filter(objeto => (objeto.id + "").includes(e.target.value));
+
+            allSheeps.forEach(element => {
+                d = findInArray(dataFitered,element.id)
+                if(d==undefined){
+                    document.getElementById(element.id).style.display = "none"
+                }else{
+                    document.getElementById(element.id).style.display = ""
+                }     
+            });
+       
+        })
     </script>
 </body>
 

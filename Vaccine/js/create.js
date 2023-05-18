@@ -35,7 +35,7 @@
             formData.append('imageFile', file);
             formData.append('name', e.target.name.value);
             formData.append('indicatedDose', indicatedDose);
-            formData.append('description', e.target.description.value);
+            formData.append('observations', e.target.observations.value);
             
             fetchRequest(urlVaccine, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {

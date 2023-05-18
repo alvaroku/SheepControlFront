@@ -52,15 +52,33 @@ fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCo
         updateForm.roleId.innerHTML = options  
     }
 });
+createForm.roleId.addEventListener("change",(e)=>{
+    selectElement = createForm.permissionId
+    selectElement.options[0].selected = false
+    for (var i = 1; i < selectElement.options.length; i++) {
+      option = selectElement.options[i];
+      find =  allData.find(function (elemento) {
+            return elemento.roleId == e.target.value && elemento.permissionId ==option.value ;
+        });
+        if(find != undefined){
+            option.selected = true
+        }else{
+            option.selected = false
+        }   
+    }
+})
 function createPermissionRoleTds(data) {
     creationDate = formatDate(data.creationDate,true)
     modificationDate = formatDate(data.modificationDate,true)
 
     auxActive = ""
+    toggle = ""
     if(data.active){
         auxActive = '<span class="badge rounded-pill bg-success">Activo</span>'
+        toggle = `<input onclick="toggleActive(event,${data.id})" class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault">`
     }else{
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
+        toggle = `<input onclick="toggleActive(event,${data.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${data.id}</td> 
         <td>${data.role.name}</td> 
@@ -73,7 +91,7 @@ function createPermissionRoleTds(data) {
             <button onclick="update(${data.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" onclick="Delete(${data.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                ${toggle}
             </div>
           </td>`
     return tr
