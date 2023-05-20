@@ -29,7 +29,7 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar por nombre" aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
@@ -169,8 +169,7 @@
                                         <form id="createForm" action="#">
                                             <div class="form-group">
                                                 <label for="name">Nombre:</label>
-                                                <input type="text" class="form-control" id="name"
-                                                    name="name">
+                                                <input type="text" class="form-control" id="name" name="name">
                                             </div>
                                             <p id="error" class="danger"></p>
                                         </form>
@@ -203,8 +202,7 @@
 
                                             <div class="form-group">
                                                 <label for="name">Nombre:</label>
-                                                <input type="text" class="form-control" id="name"
-                                                    name="name">
+                                                <input type="text" class="form-control" id="name" name="name">
                                             </div>
                                             <p id="error" class="danger"></p>
                                         </form>
@@ -251,9 +249,22 @@
     <script src="./js/update.js"></script>
     <script src="./js/delete.js"></script>
     <script>
-        if(!getCookie("auth")){
-    window.location = "/"
-}
+        if (!getCookie("auth")) {
+            window.location = "/"
+        }
+        searcher.addEventListener("keyup", (e) => {
+            dataFitered = allData.filter(objeto => (objeto.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
+
+            allData.forEach(element => {
+                d = findInArray(dataFitered,element.id)
+                if(d==undefined){
+                    document.getElementById(element.id).style.display = "none"
+                }else{
+                    document.getElementById(element.id).style.display = ""
+                }     
+            });
+       
+        })
     </script>
 </body>
 

@@ -61,12 +61,22 @@ function createSheepTds(sheep) {
         auxActive = '<span class="badge rounded-pill bg-secondary">Inactivo</span>'
         toggle = `<input onclick="toggleActive(event,${sheep.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
+    auxVendido = ""
+    if(sheep.sold){
+        auxVendido = '<span class="badge rounded-pill bg-success">Sí</span>'
+    }else{
+        auxVendido = '<span class="badge rounded-pill bg-secondary">No</span>'
+    }
     tr = `<td>${sheep.id}</td> 
           <td>${sheep.description}</td>
           <td>${sheep.weight}Kg</td>
           <td>${sheep.sex}</td>
           <td ><img width='100px' class="img" id="img-${sheep.id}" /> </td>
+          <td>${(sheep.isAcquisition)?"Sí":"No"}</td>
           <td>${birthDate}</td>
+          <td>${(sheep.isAcquisition)?"$"+sheep.kiloPrice:"NA"}</td>
+          <td>${(sheep.isAcquisition)?"$"+sheep.acquisitionCost:"NA"}</td>
+          <td>${auxVendido}</td>
           <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
@@ -91,3 +101,38 @@ function getIndicatedDoseString(indicatedDose){
     indicatedDoseString = `${quantityVolume+" "+unitVolume} por cada ${quantityWeight+" "+unitWeight}`
     return indicatedDoseString
 }
+
+createForm.isAcquisition.addEventListener("click",(e)=>{
+    if(e.target.checked){
+        createForm.kiloPrice.disabled = false
+        createForm.acquisitionCost.disabled = false
+    }else{
+        createForm.kiloPrice.disabled = true
+        createForm.acquisitionCost.disabled = true
+        createForm.kiloPrice.value = ""
+        createForm.acquisitionCost.value = ""
+    }
+})
+createForm.kiloPrice.addEventListener("change",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.weight.value)){
+        createForm.acquisitionCost.value = createForm.kiloPrice.value * createForm.weight.value
+    }
+})
+createForm.kiloPrice.addEventListener("keyup",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.weight.value)){
+        createForm.acquisitionCost.value = createForm.kiloPrice.value * createForm.weight.value
+    }
+})
+
+createForm.weight.addEventListener("change",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.kiloPrice.value)){
+        createForm.acquisitionCost.value = createForm.kiloPrice.value * createForm.weight.value
+    }
+})
+createForm.weight.addEventListener("keyup",(e)=>{
+    if(createForm.isAcquisition.checked){
+        if(parseFloat(e.target.value) && parseFloat(createForm.kiloPrice.value)){
+            createForm.acquisitionCost.value = createForm.kiloPrice.value * createForm.weight.value
+        }
+    }
+})

@@ -59,6 +59,10 @@ function createVaccineTds(vaccine) {
           <td>${vaccine.name}</td>
           <td>${indicatedDose}</td>
           <td ><img width='100px' class="img" id="img-${vaccine.id}" /> </td>
+          <td>${vaccine.netContent}ml</td>
+          <td>${vaccine.unities}</td>
+          <td>$${vaccine.unitPrice}</td>
+          <td>$${vaccine.acquisitionCost}</td>
           <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
@@ -71,3 +75,26 @@ function createVaccineTds(vaccine) {
           </td>`
     return tr
 }
+
+
+createForm.unitPrice.addEventListener("change",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.unities.value)){
+        createForm.acquisitionCost.value = createForm.unitPrice.value * createForm.unities.value
+    }
+})
+createForm.unitPrice.addEventListener("keyup",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.unities.value)){
+        createForm.acquisitionCost.value = createForm.unitPrice.value * createForm.unities.value
+    }
+})
+
+createForm.unities.addEventListener("change",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.unitPrice.value)){
+        createForm.acquisitionCost.value = createForm.unitPrice.value * createForm.unities.value
+    }
+})
+createForm.unities.addEventListener("keyup",(e)=>{
+    if(parseFloat(e.target.value) && parseFloat(createForm.unitPrice.value)){
+        createForm.acquisitionCost.value = createForm.unitPrice.value * createForm.unities.value
+    }
+})

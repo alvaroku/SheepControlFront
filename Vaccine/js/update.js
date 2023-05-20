@@ -7,20 +7,23 @@ function update(id) {
       
 
     quantityVolume = objToUpdate.indicatedDose.split("/")[0].split("|")[0]
-    unitVolume = objToUpdate.indicatedDose.split("/")[0].split("|")[1]
+
 
     quantityWeight = objToUpdate.indicatedDose.split("/")[1].split("|")[0]
-    unitWeight = objToUpdate.indicatedDose.split("/")[1].split("|")[1]
+    
 
 
     updateForm.name.value = objToUpdate.name
     updateForm.observations.value = objToUpdate.observations
     updateForm.indicatedDoseVolume.value = quantityVolume
-    updateForm.unitDoseVolume.value = unitVolume
+
     updateForm.indicatedDoseWeight.value = quantityWeight
-    updateForm.unitDoseWeight.value = unitWeight
 
 
+    updateForm.netContent.value = objToUpdate.netContent
+    updateForm.unities.value = objToUpdate.unities
+    updateForm.unitPrice.value = objToUpdate.unitPrice
+    updateForm.acquisitionCost.value = objToUpdate.acquisitionCost
     img = document.getElementById("img-" + id)
     updateForm.currentPhoto.src = img.src
 
@@ -46,12 +49,10 @@ function update(id) {
             e.preventDefault()
 
             quantityVolume = e.target.indicatedDoseVolume.value
-            unitVolume = e.target.unitDoseVolume.value
 
             quantityWeight = e.target.indicatedDoseWeight.value
-            unitWeight = e.target.unitDoseWeight.value
 
-            let indicatedDose = `${quantityVolume+"|"+unitVolume+"/"+quantityWeight+"|"+unitWeight}`
+            let indicatedDose = `${quantityVolume+"|"+"ml"+"/"+quantityWeight+"|"+"kg"}`
 
             const file = updateForm.photo.files[0];
 
@@ -63,7 +64,12 @@ function update(id) {
             formData.append('indicatedDose', indicatedDose);
             formData.append('observations', e.target.observations.value);
             formData.append('photo', objToUpdate.photo);
-            
+
+            formData.append("netContent",e.target.netContent.value)
+            formData.append("unities",e.target.unities.value)
+            formData.append("unitPrice",e.target.unitPrice.value)
+            formData.append("acquisitionCost",e.target.acquisitionCost.value)
+
             fetchRequest(urlVaccine + objToUpdate.id, { method: 'PUT', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
@@ -137,3 +143,26 @@ function update(id) {
             });
             
         }
+
+
+        updateForm.unitPrice.addEventListener("change",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.unities.value)){
+                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
+            }
+        })
+        updateForm.unitPrice.addEventListener("keyup",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.unities.value)){
+                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
+            }
+        })
+        
+        updateForm.unities.addEventListener("change",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.unitPrice.value)){
+                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
+            }
+        })
+        updateForm.unities.addEventListener("keyup",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.unitPrice.value)){
+                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
+            }
+        })

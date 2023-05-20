@@ -29,7 +29,19 @@
             formData.append('weight', e.target.weight.value);
             formData.append('description', e.target.description.value);
             formData.append('sex', e.target.sex.value);
+            formData.append("isAcquisition",e.target.isAcquisition.checked)
             
+            kiloPrice = 0
+            acquisitionCost = 0
+
+            if(e.target.isAcquisition.checked){
+                kiloPrice = e.target.kiloPrice.value
+                acquisitionCost = e.target.acquisitionCost.value
+            }
+            
+            formData.append("kiloPrice",kiloPrice)
+            formData.append("acquisitionCost",acquisitionCost)
+
             fetchRequest(urlSheep, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
@@ -48,9 +60,9 @@
                     showMessage("success","Mensaje","Registro creado")
                     allSheeps.push(data.data)
                     createForm.reset()
+                    e.target.kiloPrice.disabled = true
+                    e.target.acquisitionCost.disabled = true
                     createForm.currentSelectedPhoto.src = ""
-                    //document.querySelector('#exampleModal').classList.remove('show');
-                    //document.querySelector('.modal-backdrop').remove();
                 }
             });
 

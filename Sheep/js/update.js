@@ -10,6 +10,14 @@ function update(id) {
     updateForm.weight.value = sheep.weight
     updateForm.description.value = sheep.description
     updateForm.sex.value = sheep.sex
+    updateForm.isAcquisition.checked = sheep.isAcquisition
+
+    if(sheep.isAcquisition){
+        updateForm.kiloPrice.disabled = false
+        updateForm.acquisitionCost.disabled = false
+        updateForm.kiloPrice.value = sheep.kiloPrice
+        updateForm.acquisitionCost.value = sheep.acquisitionCost
+    }
 
     img = document.getElementById("img-" + id)
     updateForm.currentPhoto.src = img.src
@@ -46,6 +54,20 @@ function update(id) {
             formData.append('description', e.target.description.value);
             formData.append('sex', e.target.sex.value);
             formData.append('photo', objToUpdate.photo);
+
+            formData.append("isAcquisition",e.target.isAcquisition.checked)
+            
+            kiloPrice = 0
+            acquisitionCost = 0
+
+            if(e.target.isAcquisition.checked){
+                kiloPrice = e.target.kiloPrice.value
+                acquisitionCost = e.target.acquisitionCost.value
+            }
+            
+            formData.append("kiloPrice",kiloPrice)
+            formData.append("acquisitionCost",acquisitionCost)
+
             
             fetchRequest(urlSheep + objToUpdate.id, { method: 'PUT', body: formData ,headers:{"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
                 if (error) {
@@ -120,3 +142,48 @@ function update(id) {
             });
             
         }
+
+
+        updateForm.isAcquisition.addEventListener("click",(e)=>{
+            if(e.target.checked){
+                updateForm.kiloPrice.disabled = false
+                updateForm.acquisitionCost.disabled = false
+
+                if(objToUpdate.isAcquisition){
+                    updateForm.acquisitionCost.value = updateForm.weight.value * objToUpdate.kiloPrice
+                    updateForm.kiloPrice.value = objToUpdate.kiloPrice
+                }else{
+                    
+                }
+
+            }else{//setear los valores antiguis
+                updateForm.kiloPrice.disabled = true
+                    updateForm.acquisitionCost.disabled = true
+                    updateForm.kiloPrice.value = ""
+                    updateForm.acquisitionCost.value = ""
+            }
+        })
+        updateForm.kiloPrice.addEventListener("change",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.weight.value)){
+                updateForm.acquisitionCost.value = updateForm.kiloPrice.value * updateForm.weight.value
+            }
+        })
+        updateForm.kiloPrice.addEventListener("keyup",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.weight.value)){
+                updateForm.acquisitionCost.value = updateForm.kiloPrice.value * updateForm.weight.value
+            }
+        })
+        
+        updateForm.weight.addEventListener("change",(e)=>{
+            if(parseFloat(e.target.value) && parseFloat(updateForm.kiloPrice.value)){
+                updateForm.acquisitionCost.value = updateForm.kiloPrice.value * updateForm.weight.value
+            }
+        })
+        updateForm.weight.addEventListener("keyup",(e)=>{
+            if(updateForm.isAcquisition.checked){
+                if(parseFloat(e.target.value) && parseFloat(updateForm.kiloPrice.value)){
+                    updateForm.acquisitionCost.value = updateForm.kiloPrice.value * updateForm.weight.value
+                }
+            }
+        })
+        

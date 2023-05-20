@@ -18,5 +18,5 @@ function getCookie(name){
 
     function deleteCookie(nombreCookie){
         document.cookie = nombreCookie + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.location = "/"
+        document.location = "/login.html"
     }

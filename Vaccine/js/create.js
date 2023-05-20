@@ -20,12 +20,9 @@
             e.preventDefault()
 
             quantityVolume = e.target.indicatedDoseVolume.value
-            unitVolume = e.target.unitDoseVolume.value
-
             quantityWeight = e.target.indicatedDoseWeight.value
-            unitWeight = e.target.unitDoseWeight.value
 
-            let indicatedDose = `${quantityVolume+"|"+unitVolume+"/"+quantityWeight+"|"+unitWeight}`
+            let indicatedDose = `${quantityVolume+"|"+"ml"+"/"+quantityWeight+"|"+"kg"}`
 
             // Obtener la imagen del input de tipo file
             const file = createForm.photo.files[0];
@@ -36,7 +33,10 @@
             formData.append('name', e.target.name.value);
             formData.append('indicatedDose', indicatedDose);
             formData.append('observations', e.target.observations.value);
-            
+            formData.append("netContent",e.target.netContent.value)
+            formData.append("unities",e.target.unities.value)
+            formData.append("unitPrice",e.target.unitPrice.value)
+            formData.append("acquisitionCost",e.target.acquisitionCost.value)
             fetchRequest(urlVaccine, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
