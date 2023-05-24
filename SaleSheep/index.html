@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sheep Control - Permisos Asignados</title>
+    <title>Sheep Control - Ventas</title>
     <link href="../styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
@@ -29,8 +29,8 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input id="searcher" class="form-control" type="text" placeholder="Buscar" aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar"
+                    aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -94,7 +94,7 @@
                                 <a class="nav-link" href="../Vaccine/">Vacunas</a>
                                 <a class="nav-link" href="../VaccineSheep/">Vacunas aplicadas</a>
                                 <a class="nav-link" href="../SheepHistoricWeight/">Historial de pesos</a>
-                                <a class="nav-link" href="../SaleSheep/">Ventas</a>
+                                <a class="nav-link" href="#">Ventas</a>
                             </nav>
                         </div>
 
@@ -118,11 +118,41 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Registro de Permisos Asignados</h1>
+                    <h1 class="mt-4">Registro de Ventas</h1>
                     <ol class="breadcrumb mb-4">
                         <!-- <li class="breadcrumb-item active">Dashboard</li> -->
                     </ol>
+                    <div class="mb-2">
+                        <h6>Filtros de búsqueda</h6>
+                        <form id="filterCriteriaForm" action="#" class="row">
+                            <div class="col col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="startDate">Fecha inicial:</label>
+                                    <input type="date" class="form-control" id="startDate" name="startDate">
+                                </div>
+                            </div>
+                            <div class="col col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="finishDate">Fecha final:</label>
+                                    <input type="date" class="form-control" id="finishDate" name="finishDate">
+                                </div>
+                            </div>
+                            <div class="col col-sm-2 md-1 mt-3">
+                                <div class="form-group">
 
+                                    <button type="submit" form="filterCriteriaForm" class="form-control btn btn-info"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col col-sm-2 md-1 mt-3">
+                                <div class="form-group">
+                                    <button id="cleanFilters" class="form-control btn btn-warning"><i
+                                            class="fa fa-eraser" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="mb-2">
                         <button id="btnApplyVaccineToAllSheeps" style="width: 50px;" type="button"
                             class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
@@ -134,7 +164,7 @@
 
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Permisos asignados
+                            Ventas
                         </div>
                         <div class="card-body">
                             <div class="table-responsive ">
@@ -142,16 +172,23 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Rol</th>
-                                            <th>Controlador</th>
-                                            <th>Acción</th>
+                                            <th>Folio carnero</th>
+                                            <th>Es adquisición</th>
+                                            <th>Fecha nacimiento/Adquisición</th>
+                                            <th>Peso</th>
+                                            <th>Precio x kilo(compra)</th>
+                                            <th>Costo de adquisición</th>
+                                            <th>Precio x kilo(venta)</th>
+                                            <th>Total cobrado</th>
+                                            <th>Ganancia</th>
+                                            <th>Fecha de venta</th>
                                             <th>Fecha de registro</th>
                                             <th>Fecha de última modificación</th>
                                             <th>Activo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="permissionRoleTable">
+                                    <tbody id="saleSheepTable">
                                     </tbody>
                                 </table>
                             </div>
@@ -165,23 +202,35 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar registro</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Venta</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form id="createForm" action="#">
                                             <div class="form-group">
-                                                <label for="roleId">Rol:</label>
-                                                <select class="form-control" id="roleId" name="roleId">
+                                                <label for="saleDate">Fecha de venta:</label>
+                                                <input type="date" class="form-control" id="saleDate"
+                                                    name="saleDate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="kiloPrice">Precio por kilo:</label>
+                                                <input type="number" class="form-control" id="kiloPrice"
+                                                    name="kiloPrice">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sheepId">Carnero:</label>
+                                                <select disabled multiple class="form-control" id="sheepId"
+                                                    name="sheepId">
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="permissionId">Permiso:</label>
-                                                <select multiple class="form-control" id="permissionId"
-                                                    name="permissionId">
-                                                </select>
+                                                <label for="checkAll">Todos:</label>
+                                                <input disabled name="checkAll" id="checkAll" type="checkbox">
                                             </div>
+                                            <div class="mt-1">Resumen de venta<button onclick="clearResume()"
+                                                    type="button" class="btn-close" aria-label="Close"></button></div>
+                                            <div id="vaccineResume"></div>
                                             <p id="error" class="danger"></p>
                                         </form>
                                     </div>
@@ -210,19 +259,29 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="updateForm" action="#">
-                                            <form id="createForm" action="#">
-                                                <div class="form-group">
-                                                    <label for="roleId">Rol:</label>
-                                                    <select disabled class="form-control" id="roleId" name="roleId">
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="permissionId">Permiso:</label>
-                                                    <select class="form-control" id="permissionId" name="permissionId">
-                                                    </select>
-                                                </div>
-                                                <p id="error" class="danger"></p>
-                                            </form>
+
+                                            <div class="form-group">
+                                                <label for="saleDate">Fecha de venta:</label>
+                                                <input type="date" class="form-control" id="saleDate"
+                                                    name="saleDate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="kiloPrice">Precio por kilo:</label>
+                                                <input type="number" class="form-control" id="kiloPrice"
+                                                    name="kiloPrice">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sheepId">Carnero:</label>
+                                                <select disabled class="form-control" id="sheepId"
+                                                    name="sheepId">
+                                                </select>
+                                            </div>
+                                            <div class="mt-1">Resumen de venta
+
+                                            </div>
+                                            <div id="updateResume"></div>
+                                            <p id="error" class="danger"></p>
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -271,8 +330,7 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            
-            dataFitered = allData.filter(objeto => (objeto.role.name.toLowerCase() + " "+objeto.permission.controller.name.toLowerCase()+" "+objeto.permission.action.name.toLowerCase()).includes(e.target.value.toLowerCase()));
+            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase()+" "+ objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
 
             allData.forEach(element => {
                 d = findInArray(dataFitered,element.id)

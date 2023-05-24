@@ -13,4 +13,6 @@ const urlUser = baseUrl+"User/"
 const urlRole = baseUrl+"Role/"
 const urlPermissionRole = baseUrl+"PermissionRole/"
 const urlRoleUser = baseUrl+"roleUser/"
+const urlSaleSheep = baseUrl+"saleSheep/"
+const urlSheepHistoricWeight = baseUrl+"SheepHistoricWeight/"
 const lengthFolio = 4

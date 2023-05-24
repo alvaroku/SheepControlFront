@@ -81,7 +81,7 @@ function createSheepTds(sheep) {
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
           <td>
-          <button onclick="asignVaccine(${sheep.id})" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="fas fa-syringe"></i></button>
+          <button onclick="weigh(${sheep.id})" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal4"><i class="fas fa-balance-scale"></i></button>
             <button onclick="update(${sheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" onclick="Delete(${sheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">

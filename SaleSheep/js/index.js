@@ -1,18 +1,16 @@
-table = document.getElementById("vaccineSheepTable")
+table = document.getElementById("saleSheepTable")
 updateForm = document.getElementById("updateForm")
 createForm = document.getElementById("createForm")
 allData = []
-
 allSheeps = []
-allVaccines = []
 objToUpdate = null
 
 filterCriteriaForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     _startDate = e.target.startDate.value
     _finishDate = e.target.finishDate.value
-    vaccineId = e.target.vaccineId.value
-    sheepId = e.target.sheepId.value
+    // vaccineId = e.target.vaccineId.value
+    // sheepId = e.target.sheepId.value
 
     if(!finishDate || !startDate){
         showMessage("error","Error","Seleccione el rango de fechas")
@@ -21,10 +19,10 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
     objeto = {
         startDate:_startDate,
         finishDate:_finishDate,
-        sheepId:sheepId,
-        vaccineId:vaccineId
+        //sheepId:sheepId,
+        //vaccineId:vaccineId
     }
-    newUrl = urlVaccineSheep+"GetVaccineSheepWithFilters"
+    newUrl = urlSaleSheep+"GetWithFilters"
     fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al cargar los datos")
@@ -32,9 +30,9 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
         } else {
             table.innerHTML = ""
             document.getElementById("error").innerHTML = ""
-            allData = data
-            data.forEach(element => {
-                tds = createVaccineSheepTds(element)
+            allData = data.data
+            data.data.forEach(element => {
+                tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
         }
@@ -42,44 +40,26 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
 })
 cleanFilters.addEventListener("click",(e)=>{
     filterCriteriaForm.reset()
-    getAllVaccineSheep()
+    getAllSaleSheep()
     e.preventDefault()
 })
-getAllVaccineSheep()
-function getAllVaccineSheep(){
-    fetchRequest(urlVaccineSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+getAllSaleSheep()
+function getAllSaleSheep(){
+    fetchRequest(urlSaleSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
             showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             table.innerHTML = ""
             document.getElementById("error").innerHTML = ""
-            allData = data
-            data.forEach(element => {
-                tds = createVaccineSheepTds(element)
+            allData = data.data
+            data.data.forEach(element => {
+                tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
         }
     });
 }
-//getVaccines
-fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
-    if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
-        console.log(error);
-    } else {
-        allVaccines = data
-        options = ""
-        options += `<option disabled selected value="0">Seleccione un dato</option>`
-        data.forEach(element => {
-            indicatedDose = getIndicatedDoseString(element.indicatedDose)
-
-            options += `<option value="${element.id}">${element.name}. (${indicatedDose})</option>`
-        });
-        createForm.vaccineId.innerHTML = options  
-        filterCriteriaForm.vaccineId.innerHTML = options
-    }
-});
 //getSheeps
 fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
@@ -93,16 +73,17 @@ fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Aut
         data.forEach(element => {
             options += `<option value="${element.id}">${element.id}</option>`
         }); 
-        filterCriteriaForm.sheepId.innerHTML = options
+         
         createForm.sheepId.innerHTML = options
+        updateForm.sheepId.innerHTML = options
     }
 });
-createForm.vaccineId.addEventListener('change',(e)=>{
+createForm.kiloPrice.addEventListener('keyup',(e)=>{
+    checkAll.disabled = false
     createForm.sheepId.disabled = false
-    createForm.checkAll.disabled = false
 
     selectElement = createForm.sheepId
-
+    // selectElement.options[0].selected=false
     selectedValues = [];
     for (var i = 1; i < selectElement.options.length; i++) {
       option = selectElement.options[i];
@@ -110,10 +91,34 @@ createForm.vaccineId.addEventListener('change',(e)=>{
         selectedValues.push(parseInt(option.value));
       }
     }
-    if(selectedValues.length>0){
-        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines(selectedValues)}</p>`
+    if(selectedValues.length>0 && parseFloat(e.target.value)){
+        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeSale(selectedValues,e.target.value)}</p>`
+    }else{
+        // vaccineResume.innerHTML = ""
+        // selectElement.options[0].selected=true
     }
-     
+
+})
+createForm.kiloPrice.addEventListener('change',(e)=>{
+    checkAll.disabled = false
+    createForm.sheepId.disabled = false
+
+    selectElement = createForm.sheepId
+    // selectElement.options[0].selected=false
+    selectedValues = [];
+    for (var i = 1; i < selectElement.options.length; i++) {
+      option = selectElement.options[i];
+      if (option.selected) {
+        selectedValues.push(parseInt(option.value));
+      }
+    }
+    if(selectedValues.length>0 && parseFloat(e.target.value)){
+        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeSale(selectedValues,e.target.value)}</p>`
+    }else{
+        // vaccineResume.innerHTML = ""
+        // selectElement.options[0].selected=true
+    }
+
 })
 createForm.checkAll.addEventListener('change',(e)=>{
     selectElement = createForm.sheepId
@@ -125,7 +130,7 @@ createForm.checkAll.addEventListener('change',(e)=>{
             option.selected = true
             selectedValues.push(parseInt(option.value));
         }
-        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines(selectedValues)}</p>`
+        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeSale(selectedValues,createForm.kiloPrice.value)}</p>`
     }else{
         selectElement.options[0].selected = true;
         for (var i = 1; i < selectElement.options.length; i++) {
@@ -147,15 +152,15 @@ createForm.sheepId.addEventListener('change',(e)=>{
     }
     if(selectedValues.length == allSheeps.length){checkAll.checked=true}else{checkAll.checked=false}
     if(selectedValues.length>0){
-        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines(selectedValues)}</p>`
+        vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeSale(selectedValues,createForm.kiloPrice.value)}</p>`
     }else{
         vaccineResume.innerHTML = ""
         selectElement.options[0].selected=true
     }
 })
-btnApplyVaccineToAllSheeps.addEventListener('click',(e)=>{
-    //vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeVaccines()}</p>`
-})
+// btnApplyVaccineToAllSheeps.addEventListener('click',(e)=>{
+//     //vaccineResume.innerHTML = `<p class="alert alert-primary">${getResumeSale()}</p>`
+// })
  function clearResume(){
     selectElement = createForm.sheepId
     vaccineResume.innerHTML = ``
@@ -164,52 +169,30 @@ btnApplyVaccineToAllSheeps.addEventListener('click',(e)=>{
             option = selectElement.options[i];  
             option.selected = false
         }
+        checkAll.checked = false
  }
 
-function getResumeVaccines(sheepIds){
-    currentVaccineId = createForm.vaccineId.value
-    currentVaccine = findInArray(allVaccines,currentVaccineId)
+function getResumeSale(sheepIds,kiloPrice){
+    total = 0
     cadena = ""
     sheepIds.forEach(element => {
+
         sheep = findInArray(allSheeps,element)
-        appliedDose = calculateDoseRecomended(currentVaccine.indicatedDose,sheep.weight)
-        cadena += `Carnero ${foliator(sheep.id+"",lengthFolio)}(${sheep.weight}Kg) -> ${appliedDose} <br>`
+        totalCharged = parseFloat(kiloPrice) * parseFloat(sheep.weight)
+        total+=totalCharged
+        cadena += `Carnero ${foliator(sheep.id+"",lengthFolio)}(${sheep.weight}Kg) -> $${kiloPrice} = $${totalCharged}<br>`
     });
-    return cadena
+    return cadena+"==============<br>Total = $"+total
 }
-function calculateDoseRecomended(indicatedDose,weight){
-    quantityVolume = indicatedDose.split("/")[0].split("|")[0]
-    unitVolume = indicatedDose.split("/")[0].split("|")[1]
-    
-    quantityWeight = indicatedDose.split("/")[1].split("|")[0]
-         
-    doseRecomended = (weight * quantityVolume) / quantityWeight
-
-    return doseRecomended+""+unitVolume
+function calculateTotalCharged(kiloPrice,weight){
+    return kiloPrice * weight
 }
-function getIndicatedDoseString(indicatedDose){
-    quantityVolume = indicatedDose.split("/")[0].split("|")[0]
-    unitVolume = indicatedDose.split("/")[0].split("|")[1]
-
-    quantityWeight = indicatedDose.split("/")[1].split("|")[0]
-    unitWeight = indicatedDose.split("/")[1].split("|")[1]
-
-    indicatedDoseString = `${quantityVolume+" "+unitVolume} por cada ${quantityWeight+" "+unitWeight}`
-    return indicatedDoseString
-}
-
-function createVaccineSheepTds(vaccineSheep) {
+ 
+function createSaleSheepTds(vaccineSheep) {
     creationDate = formatDate(vaccineSheep.creationDate,true)
     modificationDate = formatDate(vaccineSheep.modificationDate,true)
-    applicationDate  = formatDate(vaccineSheep.applicationDate,false)
-    quantityVolume = vaccineSheep.vaccine.indicatedDose.split("/")[0].split("|")[0]
-    unitVolume = vaccineSheep.vaccine.indicatedDose.split("/")[0].split("|")[1]
-
-    quantityWeight = vaccineSheep.vaccine.indicatedDose.split("/")[1].split("|")[0]
-    unitWeight = vaccineSheep.vaccine.indicatedDose.split("/")[1].split("|")[1]
-
-    indicatedDose = `${quantityVolume+" "+unitVolume} por cada ${quantityWeight+" "+unitWeight}`
-
+    saleDate  = formatDate(vaccineSheep.saleDate,false)
+    birthDate = formatDate(vaccineSheep.sheep.birthDate,false)
     auxActive = ""
     toggle = ""
     if(vaccineSheep.active){
@@ -220,12 +203,17 @@ function createVaccineSheepTds(vaccineSheep) {
         toggle = `<input onclick="toggleActive(event,${vaccineSheep.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${vaccineSheep.id}</td> 
-          <td>${vaccineSheep.sheep.description}</td>
+          <td>${vaccineSheep.sheep.id}</td>
+          <td>${(vaccineSheep.sheep.isAcquisition)?"Sí":"No"}</td>
+          <td>${birthDate}</td>
           <td>${vaccineSheep.sheep.weight}Kg</td>
-          <td>${vaccineSheep.vaccine.name}</td>
-          <td>${indicatedDose}</td>
-          <td>${vaccineSheep.doseApplied}</td>
-          <td>${applicationDate}</td>
+          <td>${(vaccineSheep.sheep.isAcquisition)?"$"+vaccineSheep.sheep.kiloPrice:"NA"}</td>
+          <td>${(vaccineSheep.sheep.isAcquisition)?"$"+vaccineSheep.sheep.acquisitionCost:"NA"}</td>
+          
+          <td>$${vaccineSheep.kiloPrice}</td>
+          <td>$${vaccineSheep.totalCharged}</td>
+          <td>$${vaccineSheep.saleProfit}</td>
+          <td>${saleDate}</td>
           <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
@@ -238,3 +226,5 @@ function createVaccineSheepTds(vaccineSheep) {
           </td>`
     return tr
 }
+
+ 

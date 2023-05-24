@@ -33,8 +33,9 @@ function fetchRequest(url, options, callback) {
             
             if (!response.ok) {
                 response.json().then(w=>{
+                    console.log(w)
                     if(w.title){
-                      console.log(w.title)
+                      //console.log(w.title)
                       showMessage("error","Error",w.title)
                     }
                     if(w.message){

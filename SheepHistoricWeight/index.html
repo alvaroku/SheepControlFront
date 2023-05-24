@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sheep Control - Permisos Asignados</title>
+    <title>Sheep Control - Historial de Pesos</title>
     <link href="../styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
@@ -29,8 +29,8 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input id="searcher" class="form-control" type="text" placeholder="Buscar" aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar"
+                    aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -93,7 +93,7 @@
                                 <a class="nav-link" href="../Sheep/">Carneros</a>
                                 <a class="nav-link" href="../Vaccine/">Vacunas</a>
                                 <a class="nav-link" href="../VaccineSheep/">Vacunas aplicadas</a>
-                                <a class="nav-link" href="../SheepHistoricWeight/">Historial de pesos</a>
+                                <a class="nav-link" href="#">Historial de pesos</a>
                                 <a class="nav-link" href="../SaleSheep/">Ventas</a>
                             </nav>
                         </div>
@@ -118,14 +118,14 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Registro de Permisos Asignados</h1>
+                    <h1 class="mt-4">Historial de pesos</h1>
                     <ol class="breadcrumb mb-4">
                         <!-- <li class="breadcrumb-item active">Dashboard</li> -->
                     </ol>
-
+                     
                     <div class="mb-2">
                         <button id="btnApplyVaccineToAllSheeps" style="width: 50px;" type="button"
-                            class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                            class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i
                                 class="fas fa-plus"></i></button>
                         <!-- <button style="width: 50px;" type="button" class="btn btn-danger" onclick="deleteAll()"><i
                                 class="fas fa-trash-alt"></i></button> -->
@@ -134,7 +134,7 @@
 
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Permisos asignados
+                            Pesos
                         </div>
                         <div class="card-body">
                             <div class="table-responsive ">
@@ -142,45 +142,52 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Rol</th>
-                                            <th>Controlador</th>
-                                            <th>Acción</th>
+                                            <th>Folio carnero</th>
+                                            <th>Peso anterior</th>
+                                            <th>Nuevo peso</th>
+                                            <th>Diferencia</th>
+                                            <th>Fecha de pesado</th>
                                             <th>Fecha de registro</th>
                                             <th>Fecha de última modificación</th>
                                             <th>Activo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="permissionRoleTable">
+                                    <tbody id="saleSheepTable">
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
+
                     <section id="modalCreate">
                         <!-- Modal Create-->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar registro</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel1">Pesar</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form id="createForm" action="#">
                                             <div class="form-group">
-                                                <label for="roleId">Rol:</label>
-                                                <select class="form-control" id="roleId" name="roleId">
+                                                <label for="weighingDate">Fecha de pesado:</label>
+                                                <input type="date" class="form-control" id="weighingDate"
+                                                    name="weighingDate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sheepId">Folio del carnero:</label>
+                                                <select class="form-control" id="sheepId" name="sheepId">
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="permissionId">Permiso:</label>
-                                                <select multiple class="form-control" id="permissionId"
-                                                    name="permissionId">
-                                                </select>
+                                                <label for="newWeight">Peso:</label>
+                                                <input type="number" class="form-control" id="newWeight"
+                                                    name="newWeight">
                                             </div>
                                             <p id="error" class="danger"></p>
                                         </form>
@@ -196,33 +203,36 @@
                         </div>
 
                     </section>
-
                     <section id="modalUpdate">
-                        <!-- Modal Update-->
+                        <!-- Modal Create-->
                         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel2">Actualizar Información</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel2">Actualizar datos</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form id="updateForm" action="#">
-                                            <form id="createForm" action="#">
-                                                <div class="form-group">
-                                                    <label for="roleId">Rol:</label>
-                                                    <select disabled class="form-control" id="roleId" name="roleId">
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="permissionId">Permiso:</label>
-                                                    <select class="form-control" id="permissionId" name="permissionId">
-                                                    </select>
-                                                </div>
-                                                <p id="error" class="danger"></p>
-                                            </form>
+                                            <div class="form-group">
+                                                <label for="weighingDate">Fecha de pesado:</label>
+                                                <input type="date" class="form-control" id="weighingDate"
+                                                    name="weighingDate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sheepId">Folio del carnero:</label>
+                                                <input disabled class="form-control" id="sheepId" name="sheepId">
+                                                </input>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newWeight">Peso:</label>
+                                                <input type="number" class="form-control" id="newWeight"
+                                                    name="newWeight">
+                                            </div>
+                                            <p id="error" class="danger"></p>
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -271,8 +281,7 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            
-            dataFitered = allData.filter(objeto => (objeto.role.name.toLowerCase() + " "+objeto.permission.controller.name.toLowerCase()+" "+objeto.permission.action.name.toLowerCase()).includes(e.target.value.toLowerCase()));
+            dataFitered = allData.filter(objeto => (objeto.sheepId+ "").includes(e.target.value.toLowerCase()));
 
             allData.forEach(element => {
                 d = findInArray(dataFitered,element.id)
