@@ -24,6 +24,7 @@ createForm.addEventListener("submit", (e) => {
         } else {
             showMessage("success","Mensaje",data.message)
             //allSheeps.push(data.data)
+            getSheeps()
             createForm.reset()
             createForm.sheepId.disabled = true
             createForm.checkAll.disabled = true

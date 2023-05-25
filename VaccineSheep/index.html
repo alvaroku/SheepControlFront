@@ -186,8 +186,9 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
+                                            <th>Folio del carnero</th>
                                             <th>Descripción del carnero</th>
-                                            <th>Peso</th>
+                                            <th>Peso al día de vacuna</th>
                                             <th>Nombre de la vacuna</th>
                                             <th>Dosis indicada</th>
                                             <th>Dosis aplicada</th>
@@ -341,7 +342,7 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase()+" "+ objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
+            dataFitered = allData.filter(objeto => (objeto.sheepId+" "+objeto.sheep.description.toLowerCase()+" "+ objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
 
             allData.forEach(element => {
                 d = findInArray(dataFitered,element.id)

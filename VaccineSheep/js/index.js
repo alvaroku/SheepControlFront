@@ -91,7 +91,9 @@ fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Aut
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
         data.forEach(element => {
-            options += `<option value="${element.id}">${element.id}</option>`
+            if(!element.sold){
+                options += `<option value="${element.id}">${element.id}</option>`
+            }
         }); 
         filterCriteriaForm.sheepId.innerHTML = options
         createForm.sheepId.innerHTML = options
@@ -220,8 +222,9 @@ function createVaccineSheepTds(vaccineSheep) {
         toggle = `<input onclick="toggleActive(event,${vaccineSheep.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${vaccineSheep.id}</td> 
+          <td>${vaccineSheep.sheepId}</td>
           <td>${vaccineSheep.sheep.description}</td>
-          <td>${vaccineSheep.sheep.weight}Kg</td>
+          <td>${vaccineSheep.weightVaccinationDay}Kg</td>
           <td>${vaccineSheep.vaccine.name}</td>
           <td>${indicatedDose}</td>
           <td>${vaccineSheep.doseApplied}</td>
@@ -230,7 +233,7 @@ function createVaccineSheepTds(vaccineSheep) {
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
           <td>
-            <button onclick="update(${vaccineSheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
+             
             <button class="btn btn-danger" onclick="Delete(${vaccineSheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
                 ${toggle}

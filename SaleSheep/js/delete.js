@@ -7,6 +7,7 @@ function Delete(id) {
             document.getElementById(id).remove();
             showMessage("success","Mensaje","Registro eliminado")
             allData = deleteToArray(allData,id)
+            getSheeps()
         }
     });
 }

@@ -60,24 +60,29 @@ function getAllSaleSheep(){
         }
     });
 }
+getSheeps()
 //getSheeps
-fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
-    if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
-        console.log(error);
-    } else {
-        allSheeps = data
-
-        options = ""
-        options += `<option disabled selected value="0">Seleccione un dato</option>`
-        data.forEach(element => {
-            options += `<option value="${element.id}">${element.id}</option>`
-        }); 
-         
-        createForm.sheepId.innerHTML = options
-        updateForm.sheepId.innerHTML = options
-    }
-});
+function getSheeps(){
+    fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+        if (error) {
+            showMessage("error","Mensaje","Error al cargar los datos")
+            console.log(error);
+        } else {
+            allSheeps = data
+    
+            options = ""
+            options += `<option disabled selected value="0">Seleccione un dato</option>`
+            data.forEach(element => {
+                if(!element.sold){
+                    options += `<option value="${element.id}">${element.id}</option>`
+                }
+            }); 
+             
+            createForm.sheepId.innerHTML = options
+            updateForm.sheepId.innerHTML = options
+        }
+    });
+}
 createForm.kiloPrice.addEventListener('keyup',(e)=>{
     checkAll.disabled = false
     createForm.sheepId.disabled = false

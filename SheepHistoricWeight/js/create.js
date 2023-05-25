@@ -17,6 +17,7 @@ createForm.addEventListener("submit",(e)=>{
             allData.push(data.data)
             createForm.reset()
             
+            
         }
     });
 })

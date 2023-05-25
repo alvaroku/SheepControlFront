@@ -23,7 +23,7 @@ function getAllSaleSheep(){
 }
 
 //getSheeps
-fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
@@ -33,7 +33,9 @@ fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getC
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
         data.forEach(element => {
-            options += `<option value="${element.id}">${element.id}</option>`
+            if(!element.sold){
+                options += `<option value="${element.id}">${element.id}</option>`
+            }
         }); 
         createForm.sheepId.innerHTML = options
     }
@@ -62,7 +64,7 @@ function createSaleSheepTds(vaccineSheep) {
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
           <td>
-          <button onclick="update(${vaccineSheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
+          
             <button class="btn btn-danger" onclick="Delete(${vaccineSheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
                 ${toggle}
