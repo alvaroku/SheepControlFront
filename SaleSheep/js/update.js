@@ -25,8 +25,12 @@ updateForm.kiloPrice.addEventListener('change',(e)=>{
                 saleProfit: 0,
                 saleDate: e.target.saleDate.value,
             }
+            btnRequest1.style.display="none"
+            loading1.style.display = ""
             fetchRequest(urlSaleSheep + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
             ,"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+                btnRequest1.style.display=""
+                loading1.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);

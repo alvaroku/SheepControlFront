@@ -40,8 +40,8 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><a class="dropdown-item" href="#!">Perfil</a></li>
+                    <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -55,12 +55,12 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading">Inicio</div>
                         <a class="nav-link" href="/index.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <div class="sb-sidenav-menu-heading">Menú</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -91,6 +91,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="#">Carneros</a>
                                 <a class="nav-link" href="../Vaccine/">Vacunas</a>
+                                <a class="nav-link" href="../VaccineStock/">Inventario de Vacunas</a>
                                 <a class="nav-link" href="../VaccineSheep/">Vacunas aplicadas</a>
                                 <a class="nav-link" href="../SheepHistoricWeight/">Historial de pesos</a>
                                 <a class="nav-link" href="../SaleSheep/">Ventas</a>
@@ -109,7 +110,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Correo:</div>
                     <span id="userInfo"></span>
                 </div>
             </nav>
@@ -176,8 +177,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="weight">Peso(KG):</label>
-                                                <input type="number" class="form-control" id="weight"
-                                                    name="weight">
+                                                <input step=".1" type="number" class="form-control" id="weight" name="weight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Descripción:</label>
@@ -211,15 +211,21 @@
                                                 <input disabled type="number" class="form-control" id="acquisitionCost"
                                                     name="acquisitionCost">
                                             </div>
-                                            
+
                                             <p id="error" class="danger"></p>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="createForm"
+                                        <input id="btnRequest" type="submit" class="btn btn-primary" form="createForm"
                                             value="Guardar" />
+                                        <button style="display: none;" id="loading" class="btn btn-primary"
+                                            type="button" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            Cargando...
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -246,8 +252,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="weight">Peso(KG):</label>
-                                                <input type="number" class="form-control" id="weight"
-                                                    name="weight">
+                                                <input step=".1" type="number" class="form-control" id="weight" name="weight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Descripción:</label>
@@ -290,8 +295,13 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="updateForm"
+                                            <input id="btnRequest1" type="submit" class="btn btn-primary" form="updateForm"
                                             value="Guardar" />
+                                            <button style="display: none;"  id="loading1" class="btn btn-primary" type="button" disabled>
+                                                <span class="spinner-border spinner-border-sm" role="status"
+                                                    aria-hidden="true"></span>
+                                                Cargando...
+                                            </button>
                                     </div>
                                 </div>
                             </div>
@@ -366,7 +376,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="newWeight">Peso:</label>
-                                                <input type="number" class="form-control" id="newWeight"
+                                                <input step=".1" type="number" class="form-control" id="newWeight"
                                                     name="newWeight">
                                             </div>
                                             <p id="error" class="danger"></p>
@@ -375,8 +385,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="weighForm"
-                                            value="Guardar" />
+                                        <input type="submit" class="btn btn-primary" form="weighForm" value="Guardar" />
                                     </div>
                                 </div>
                             </div>
@@ -425,14 +434,14 @@
             dataFitered = allSheeps.filter(objeto => (objeto.id + "").includes(e.target.value));
 
             allSheeps.forEach(element => {
-                d = findInArray(dataFitered,element.id)
-                if(d==undefined){
+                d = findInArray(dataFitered, element.id)
+                if (d == undefined) {
                     document.getElementById(element.id).style.display = "none"
-                }else{
+                } else {
                     document.getElementById(element.id).style.display = ""
-                }     
+                }
             });
-       
+
         })
     </script>
 </body>

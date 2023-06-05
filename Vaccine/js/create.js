@@ -33,11 +33,18 @@
             formData.append('name', e.target.name.value);
             formData.append('indicatedDose', indicatedDose);
             formData.append('observations', e.target.observations.value);
-            formData.append("netContent",e.target.netContent.value)
-            formData.append("unities",e.target.unities.value)
-            formData.append("unitPrice",e.target.unitPrice.value)
-            formData.append("acquisitionCost",e.target.acquisitionCost.value)
+          
+            
+            formData.append("vaccineStock.acquisitionDate",e.target.acquisitionDate.value)
+            formData.append("vaccineStock.netContent",e.target.netContent.value)
+            formData.append("vaccineStock.unities",e.target.unities.value)
+            formData.append("vaccineStock.unitPrice",e.target.unitPrice.value)
+            formData.append("vaccineStock.acquisitionCost",e.target.acquisitionCost.value)
+            btnRequest.style.display="none"
+            loading.style.display = ""
             fetchRequest(urlVaccine, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
+                btnRequest.style.display=""
+                loading.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error)

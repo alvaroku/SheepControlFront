@@ -20,10 +20,10 @@ function update(id) {
     updateForm.indicatedDoseWeight.value = quantityWeight
 
 
-    updateForm.netContent.value = objToUpdate.netContent
-    updateForm.unities.value = objToUpdate.unities
-    updateForm.unitPrice.value = objToUpdate.unitPrice
-    updateForm.acquisitionCost.value = objToUpdate.acquisitionCost
+    // updateForm.netContent.value = objToUpdate.netContent
+    // updateForm.unities.value = objToUpdate.unities
+    // updateForm.unitPrice.value = objToUpdate.unitPrice
+    // updateForm.acquisitionCost.value = objToUpdate.acquisitionCost
     img = document.getElementById("img-" + id)
     updateForm.currentPhoto.src = img.src
 
@@ -65,12 +65,16 @@ function update(id) {
             formData.append('observations', e.target.observations.value);
             formData.append('photo', objToUpdate.photo);
 
-            formData.append("netContent",e.target.netContent.value)
-            formData.append("unities",e.target.unities.value)
-            formData.append("unitPrice",e.target.unitPrice.value)
-            formData.append("acquisitionCost",e.target.acquisitionCost.value)
+            // formData.append("netContent",e.target.netContent.value)
+            // formData.append("unities",e.target.unities.value)
+            // formData.append("unitPrice",e.target.unitPrice.value)
+            // formData.append("acquisitionCost",e.target.acquisitionCost.value)
+            btnRequest1.style.display="none"
+            loading1.style.display = ""
 
             fetchRequest(urlVaccine + objToUpdate.id, { method: 'PUT', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
+                btnRequest1.style.display=""
+                loading1.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);
@@ -115,7 +119,7 @@ function update(id) {
     
         function toggleActive(event,id){
 
-            fetchRequest(urlRole+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+            fetchRequest(urlVaccine+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     event.preventDefault()
@@ -145,24 +149,4 @@ function update(id) {
         }
 
 
-        updateForm.unitPrice.addEventListener("change",(e)=>{
-            if(parseFloat(e.target.value) && parseFloat(updateForm.unities.value)){
-                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
-            }
-        })
-        updateForm.unitPrice.addEventListener("keyup",(e)=>{
-            if(parseFloat(e.target.value) && parseFloat(updateForm.unities.value)){
-                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
-            }
-        })
-        
-        updateForm.unities.addEventListener("change",(e)=>{
-            if(parseFloat(e.target.value) && parseFloat(updateForm.unitPrice.value)){
-                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
-            }
-        })
-        updateForm.unities.addEventListener("keyup",(e)=>{
-            if(parseFloat(e.target.value) && parseFloat(updateForm.unitPrice.value)){
-                updateForm.acquisitionCost.value = updateForm.unitPrice.value * updateForm.unities.value
-            }
-        })
+ 

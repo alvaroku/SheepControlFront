@@ -12,8 +12,11 @@ updateForm.addEventListener("submit",(e)=>{
         weighingDate: e.target.weighingDate.value,
         newWeight: e.target.newWeight.value
     }
-     
+    btnRequest1.style.display="none"
+    loading1.style.display = ""
     fetchRequest(urlSheepHistoricWeight+objectToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+        btnRequest1.style.display=""
+        loading1.style.display = "none"
         if (error) {
             showMessage("error","Mensaje","Ocurrió un error al registrar")
             console.log(error);

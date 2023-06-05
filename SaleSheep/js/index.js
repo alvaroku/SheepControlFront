@@ -223,13 +223,13 @@ function createSaleSheepTds(vaccineSheep) {
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
           <td>
-            <button onclick="update(${vaccineSheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
+
             <button class="btn btn-danger" onclick="Delete(${vaccineSheep.id})"><i class="fas fa-trash-alt"></i></button>
             <div class="form-check form-switch">
                 ${toggle}
             </div>
           </td>`
     return tr
-}
+}//            <button onclick="update(${vaccineSheep.id})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="fas fa-edit"></i></button>
 
  

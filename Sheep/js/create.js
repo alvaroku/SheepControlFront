@@ -19,6 +19,9 @@
         createForm.addEventListener("submit", (e) => {
             e.preventDefault()
 
+             
+
+
             // Obtener la imagen del input de tipo file
             const file = createForm.photo.files[0];
             // Crear un objeto FormData y agregar la imagen a él
@@ -42,7 +45,12 @@
             formData.append("kiloPrice",kiloPrice)
             formData.append("acquisitionCost",acquisitionCost)
 
+            btnRequest.style.display="none"
+            loading.style.display = ""
             fetchRequest(urlSheep, { method: 'POST', body: formData,headers:{"Authorization": `Bearer ${getCookie('auth')}`} }, function (error, data) {
+                
+                btnRequest.style.display=""
+                loading.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error);

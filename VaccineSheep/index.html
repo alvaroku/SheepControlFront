@@ -29,8 +29,8 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input id="searcher" class="form-control" type="text" placeholder="Buscar"
-                    aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar" aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -41,8 +41,8 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><a class="dropdown-item" href="#!">Perfil</a></li>
+                    <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -56,12 +56,12 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading">Inicio</div>
                         <a class="nav-link" href="/index.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <div class="sb-sidenav-menu-heading">Menú</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -92,6 +92,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="../Sheep/">Carneros</a>
                                 <a class="nav-link" href="../Vaccine/">Vacunas</a>
+                                <a class="nav-link" href="../VaccineStock/">Inventario de Vacunas</a>
                                 <a class="nav-link" href="#">Vacunas aplicadas</a>
                                 <a class="nav-link" href="../SheepHistoricWeight/">Historial de pesos</a>
                                 <a class="nav-link" href="../SaleSheep/">Ventas</a>
@@ -110,7 +111,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Correo:</div>
                     <span id="userInfo"></span>
                 </div>
             </nav>
@@ -248,8 +249,14 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="createForm"
+                                        <input id="btnRequest" type="submit" class="btn btn-primary" form="createForm"
                                             value="Guardar" />
+                                        <button style="display: none;" id="loading" class="btn btn-primary"
+                                            type="button" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            Cargando...
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -298,8 +305,13 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <input type="submit" class="btn btn-primary" form="updateForm"
+                                            <input id="btnRequest1" type="submit" class="btn btn-primary" form="updateForm"
                                             value="Guardar" />
+                                            <button style="display: none;"  id="loading1" class="btn btn-primary" type="button" disabled>
+                                                <span class="spinner-border spinner-border-sm" role="status"
+                                                    aria-hidden="true"></span>
+                                                Cargando...
+                                            </button>
                                     </div>
                                 </div>
                             </div>
@@ -342,17 +354,17 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            dataFitered = allData.filter(objeto => (objeto.sheepId+" "+objeto.sheep.description.toLowerCase()+" "+ objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
+            dataFitered = allData.filter(objeto => (objeto.sheepId + " " + objeto.sheep.description.toLowerCase() + " " + objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
 
             allData.forEach(element => {
-                d = findInArray(dataFitered,element.id)
-                if(d==undefined){
+                d = findInArray(dataFitered, element.id)
+                if (d == undefined) {
                     document.getElementById(element.id).style.display = "none"
-                }else{
+                } else {
                     document.getElementById(element.id).style.display = ""
-                }     
+                }
             });
-       
+
         })
     </script>
 </body>

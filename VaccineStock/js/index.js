@@ -3,48 +3,49 @@ table = document.getElementById("sheepTable")
 updateForm = document.getElementById("updateForm")
 createForm = document.getElementById("createForm")
 allData = []
-
+allVaccines = []
 objToUpdate = null
 
-fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+fetchRequest(urlVaccineStock, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
         showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
-        allData = data
-        data.forEach(element => {
+        allData = data.data
+        data.data.forEach(element => {
             tds = createVaccineTds(element)
 
             table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
-
-            requestImage(urlVaccine + "GetImage/" + element.photo, function (error, data) {
-                if (data) {
-                    img = document.getElementById('img-' + element.id);
-                    img.src = URL.createObjectURL(data);
-                }
-            })
-
-
         });
     }
 });
 
+//getVaccines
+fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
+    if (error) {
+        showMessage("error","Mensaje","Error al cargar los datos")
+        console.log(error);
+    } else {
+        allVaccines = data
+        options = ""
+        options += `<option disabled selected value="0">Seleccione un dato</option>`
+        data.forEach(element => {
+            
 
+            options += `<option value="${element.id}">${element.name}</option>`
+        });
+        createForm.vaccineId.innerHTML = options  
+        updateForm.vaccineId.innerHTML = options
+    }
+});
 /////////Extras///////////
 
 function createVaccineTds(vaccine) {
     creationDate = formatDate(vaccine.creationDate,true)
     modificationDate = formatDate(vaccine.modificationDate,true)
 
-    quantityVolume = vaccine.indicatedDose.split("/")[0].split("|")[0]
-    unitVolume = vaccine.indicatedDose.split("/")[0].split("|")[1]
-
-    quantityWeight = vaccine.indicatedDose.split("/")[1].split("|")[0]
-    unitWeight = vaccine.indicatedDose.split("/")[1].split("|")[1]
-
-    indicatedDose = `${quantityVolume+" "+unitVolume} por cada ${quantityWeight+" "+unitWeight}`
-
+    acquisitionDate = formatDate(vaccine.acquisitionDate,false)
     auxActive = ""
     toggle = ""
     if(vaccine.active){
@@ -55,11 +56,13 @@ function createVaccineTds(vaccine) {
         toggle = `<input onclick="toggleActive(event,${vaccine.id})" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">`
     }
     tr = `<td>${vaccine.id}</td> 
-          <td>${vaccine.observations}</td>
-          <td>${vaccine.name}</td>
-          <td>${indicatedDose}</td>
-          <td ><img width='100px' class="img" id="img-${vaccine.id}" /> </td>
-          
+          <td>${vaccine.vaccine.id}</td> 
+          <td>${vaccine.vaccine.name}</td>
+          <td>${vaccine.netContent}ml</td>
+          <td>${vaccine.unities}</td>
+          <td>$${vaccine.unitPrice}</td>
+          <td>$${vaccine.acquisitionCost} 
+          <td>${acquisitionDate}
           <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
@@ -71,10 +74,6 @@ function createVaccineTds(vaccine) {
             </div>
           </td>`
     return tr
-    // <td>${vaccine.netContent}ml</td>
-    //       <td>${vaccine.unities}</td>
-    //       <td>$${vaccine.unitPrice}</td>
-    //       <td>$${vaccine.acquisitionCost}</td>
 }
 
 

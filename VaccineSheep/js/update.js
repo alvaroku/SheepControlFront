@@ -25,9 +25,12 @@ function update(id) {
                 applicationDate: e.target.applicationDate.value,
                 doseApplied: e.target.doseApplied.value
             }
-
+            btnRequest1.style.display="none"
+            loading1.style.display = ""
             fetchRequest(urlVaccineSheep + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
             ,"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+                btnRequest1.style.display=""
+                loading1.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);

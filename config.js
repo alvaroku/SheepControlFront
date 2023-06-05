@@ -5,6 +5,7 @@ const _cbaseUrl = " http://localhost:5000/api/"
 
 const urlSheep = baseUrl+"Sheep/"
 const urlVaccine = baseUrl+"Vaccine/"
+const urlVaccineStock = baseUrl+"VaccineStock/"
 const urlVaccineSheep = baseUrl+"VaccineSheep/"
 const urlAction = baseUrl+"Action/"
 const urlController = baseUrl+"Controller/"

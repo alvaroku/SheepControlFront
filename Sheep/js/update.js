@@ -68,8 +68,12 @@ function update(id) {
             formData.append("kiloPrice",kiloPrice)
             formData.append("acquisitionCost",acquisitionCost)
 
-            
+ 
+            btnRequest1.style.display="none"
+            loading1.style.display = ""
             fetchRequest(urlSheep + objToUpdate.id, { method: 'PUT', body: formData ,headers:{"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+                btnRequest1.style.display=""
+                loading1.style.display = "none"
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);
