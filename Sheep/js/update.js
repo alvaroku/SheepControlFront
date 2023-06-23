@@ -118,7 +118,7 @@ function update(id) {
 
         function toggleActive(event,id){
 
-            fetchRequest(urlRole+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+            fetchRequest(urlSheep+"toggleActive/" + id, {headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
                 if (error) {
                     showMessage("error","Mensaje","Error al actualizar")
                     event.preventDefault()

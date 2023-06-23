@@ -132,7 +132,7 @@ function deleteInfoUSer(){
     userInfo.innerHTML = ""
     window.location.href = "/login.html"
 }
-verifyLogin()
+//verifyLogin()
 
 function verifyLogin(){
     if(getCookie("auth")){
@@ -144,6 +144,7 @@ function verifyLogin(){
                 // if(loginForm){
                 //     loginForm.style.display = ""
                 // }
+                deleteCookie("auth")
                 window.location = "/login.html"
             } else {
                 if(data.data){
@@ -154,10 +155,7 @@ function verifyLogin(){
                     // }
                     //console.log(data)
                     //showMessage("success","Mensaje",`logueado como: ${data.data.email}`)
-                }else{
-                   // window.location = "/"
-                   deleteCookie("auth")
-                }
+                } 
             }
         });
     }else{

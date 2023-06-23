@@ -13,7 +13,6 @@ loginForm.addEventListener("submit",(e)=>{
 
         } else {
             document.cookie = "auth="+data.data.token;
-            showMessage("success","Mensaje",`logueado como: ${data.data.email}`)
             window.location.href = "/index.html"
         }
     });
