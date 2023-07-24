@@ -100,7 +100,7 @@ function update(id) {
                     updateForm.reset()
                     updateForm.currentSelectedPhoto.src = ""
                     updateForm.currentPhoto.src = ""
-                    showMessage("success","Mensaje","Registro actualizado")
+                    showMessage("success","Mensaje",data.message)
 
                     let index = allSheeps.findIndex(obj => obj.id === data.data.id); // busca el objeto con id 3 y devuelve su posición en el array
 
@@ -140,7 +140,7 @@ function update(id) {
                         allSheeps[index] = dataToogle; // asigna el nuevo objeto en su posición
                     }
         
-                    showMessage("success","Mensaje","Registro actualizado")
+                    showMessage("success","Mensaje",data.message)
         
                 }
             });

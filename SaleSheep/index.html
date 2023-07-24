@@ -29,8 +29,8 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input id="searcher" class="form-control" type="text" placeholder="Buscar"
-                    aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <input id="searcher" class="form-control" type="text" placeholder="Buscar" aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -42,7 +42,7 @@
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Perfil</a></li>
-                     <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
+                    <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -138,15 +138,16 @@
                                     <input type="date" class="form-control" id="finishDate" name="finishDate">
                                 </div>
                             </div>
-                            <div class="col col-sm-2 md-1 mt-3">
+                            <div class="col col-sm-2">
                                 <div class="form-group">
-
+                                    <label for=""></label>
                                     <button type="submit" form="filterCriteriaForm" class="form-control btn btn-info"><i
                                             class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                            <div class="col col-sm-2 md-1 mt-3">
+                            <div class="col col-sm-2">
                                 <div class="form-group">
+                                    <label for=""></label>
                                     <button id="cleanFilters" class="form-control btn btn-warning"><i
                                             class="fa fa-eraser" aria-hidden="true"></i></button>
                                 </div>
@@ -211,8 +212,7 @@
                                         <form id="createForm" action="#">
                                             <div class="form-group">
                                                 <label for="saleDate">Fecha de venta:</label>
-                                                <input type="date" class="form-control" id="saleDate"
-                                                    name="saleDate">
+                                                <input type="date" class="form-control" id="saleDate" name="saleDate">
                                             </div>
                                             <div class="form-group">
                                                 <label for="kiloPrice">Precio por kilo:</label>
@@ -238,13 +238,14 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                            <input id="btnRequest" type="submit" class="btn btn-primary" form="createForm"
+                                        <input id="btnRequest" type="submit" class="btn btn-primary" form="createForm"
                                             value="Guardar" />
-                                            <button style="display: none;"  id="loading" class="btn btn-primary" type="button" disabled>
-                                                <span class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                Cargando...
-                                            </button>
+                                        <button style="display: none;" id="loading" class="btn btn-primary"
+                                            type="button" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            Cargando...
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -268,8 +269,7 @@
 
                                             <div class="form-group">
                                                 <label for="saleDate">Fecha de venta:</label>
-                                                <input type="date" class="form-control" id="saleDate"
-                                                    name="saleDate">
+                                                <input type="date" class="form-control" id="saleDate" name="saleDate">
                                             </div>
                                             <div class="form-group">
                                                 <label for="kiloPrice">Precio por kilo:</label>
@@ -278,8 +278,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="sheepId">Carnero:</label>
-                                                <select disabled class="form-control" id="sheepId"
-                                                    name="sheepId">
+                                                <select disabled class="form-control" id="sheepId" name="sheepId">
                                                 </select>
                                             </div>
                                             <div class="mt-1">Resumen de venta
@@ -292,13 +291,14 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                            <input id="btnRequest1" type="submit" class="btn btn-primary" form="updateForm"
+                                        <input id="btnRequest1" type="submit" class="btn btn-primary" form="updateForm"
                                             value="Guardar" />
-                                            <button style="display: none;"  id="loading1" class="btn btn-primary" type="button" disabled>
-                                                <span class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                Cargando...
-                                            </button>
+                                        <button style="display: none;" id="loading1" class="btn btn-primary"
+                                            type="button" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            Cargando...
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -341,17 +341,17 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase()+" "+ objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
+            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase() + " " + objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
 
             allData.forEach(element => {
-                d = findInArray(dataFitered,element.id)
-                if(d==undefined){
+                d = findInArray(dataFitered, element.id)
+                if (d == undefined) {
                     document.getElementById(element.id).style.display = "none"
-                }else{
+                } else {
                     document.getElementById(element.id).style.display = ""
-                }     
+                }
             });
-       
+
         })
         verifyLogin()
     </script>

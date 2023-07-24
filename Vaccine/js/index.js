@@ -8,7 +8,7 @@ objToUpdate = null
 
 fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
@@ -18,12 +18,12 @@ fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${ge
 
             table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
 
-            requestImage(urlVaccine + "GetImage/" + element.photo, function (error, data) {
-                if (data) {
-                    img = document.getElementById('img-' + element.id);
-                    img.src = URL.createObjectURL(data);
-                }
-            })
+            // requestImage(urlVaccine + "GetImage/" + element.photo, function (error, data) {
+            //     if (data) {
+            //         img = document.getElementById('img-' + element.id);
+            //         img.src = URL.createObjectURL(data);
+            //     }
+            // })
 
 
         });
@@ -58,7 +58,7 @@ function createVaccineTds(vaccine) {
           <td>${vaccine.observations}</td>
           <td>${vaccine.name}</td>
           <td>${indicatedDose}</td>
-          <td ><img width='100px' class="img" id="img-${vaccine.id}" /> </td>
+          <td ><img width='100px' class="img" id="img-${vaccine.id}" src='${urlVaccine+"getImage/"+vaccine.photo}' /> </td>
           
           <td>${creationDate}</td>
           <td>${modificationDate}</td>

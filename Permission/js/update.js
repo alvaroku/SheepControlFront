@@ -28,7 +28,7 @@ function update(id) {
                     objToUpdate = null
                     updateForm.reset()
                      
-                    showMessage("success","Mensaje","Registro actualizado")
+                    showMessage("success","Mensaje",data.message)
 
                     let index = allData.findIndex(obj => obj.id === data.data.id); // busca el objeto con id 3 y devuelve su posición en el array
 
@@ -65,7 +65,7 @@ function update(id) {
                         allData[index] = dataToogle; // asigna el nuevo objeto en su posición
                     }
         
-                    showMessage("success","Mensaje","Registro actualizado")
+                    showMessage("success","Mensaje",data.message)
         
                 }
             });

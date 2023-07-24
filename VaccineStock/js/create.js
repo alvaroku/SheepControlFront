@@ -17,13 +17,13 @@
                 btnRequest.style.display=""
                 loading.style.display = "none"
                 if (error) {
-                    showMessage("error","Mensaje","Ocurrió un error al registrar")
+                    //showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error)
                 } else {
                     tds = createVaccineTds(data.data)
                     table.innerHTML += `<tr id="${data.data.id}">${tds}</td>`
 
-                    showMessage("success","Mensaje","Registro creado")
+                    showMessage("success","Mensaje",data.message)
                     allData.push(data.data)
                     createForm.reset()
                 }

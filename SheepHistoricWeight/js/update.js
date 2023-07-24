@@ -18,7 +18,7 @@ updateForm.addEventListener("submit",(e)=>{
         btnRequest1.style.display=""
         loading1.style.display = "none"
         if (error) {
-            showMessage("error","Mensaje","Ocurrió un error al registrar")
+            //showMessage("error","Mensaje","Ocurrió un error al registrar")
             console.log(error);
         } else {
             tr = document.getElementById(data.data.id)
@@ -28,7 +28,7 @@ updateForm.addEventListener("submit",(e)=>{
                     objectToUpdate = null
                     updateForm.reset()
                      
-                    showMessage("success","Mensaje","Registro actualizado")
+                    showMessage("success","Mensaje",data.message)
 
                     let index = allData.findIndex(obj => obj.id === data.data.id); // busca el objeto con id 3 y devuelve su posición en el array
 
@@ -61,7 +61,7 @@ function toggleActive(event,id){
                 allData[index] = dataToogle; // asigna el nuevo objeto en su posición
             }
 
-            showMessage("success","Mensaje","Registro actualizado")
+            showMessage("success","Mensaje",data.message)
 
         }
     });

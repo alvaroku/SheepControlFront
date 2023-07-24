@@ -6,7 +6,7 @@ objToUpdate = null
 
 fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         table.innerHTML = ""

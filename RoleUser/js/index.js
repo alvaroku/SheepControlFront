@@ -8,7 +8,7 @@ objToUpdate = null
 
 fetchRequest(urlRoleUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         table.innerHTML = ""
@@ -22,7 +22,7 @@ fetchRequest(urlRoleUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${g
 });
 fetchRequest(urlUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
@@ -38,7 +38,7 @@ fetchRequest(urlUser, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCo
 });
 fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
@@ -52,6 +52,21 @@ fetchRequest(urlRole, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCo
         updateForm.roleId.innerHTML = options  
     }
 });
+createForm.userId.addEventListener("change",(e)=>{
+    selectElement = createForm.roleId
+    selectElement.options[0].selected = false
+    for (var i = 1; i < selectElement.options.length; i++) {
+      option = selectElement.options[i];
+      find =  allData.find(function (elemento) {
+            return elemento.userId == e.target.value && elemento.roleId ==option.value ;
+        });
+        if(find != undefined){
+            option.selected = true
+        }else{
+            option.selected = false
+        }   
+    }
+})
 function createRoleUserTds(data) {
     creationDate = formatDate(data.creationDate,true)
     modificationDate = formatDate(data.modificationDate,true)

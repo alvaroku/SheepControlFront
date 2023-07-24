@@ -9,7 +9,7 @@ objToUpdate = null
 
 fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
@@ -19,12 +19,12 @@ fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getC
 
             table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
 
-            requestImage(urlSheep + "GetImage/" + element.photo, function (error, data) {
-                if (data) {
-                    img = document.getElementById('img-' + element.id);
-                    img.src = URL.createObjectURL(data);
-                }
-            })
+            // requestImage(urlSheep + "GetImage/" + element.photo, function (error, data) {
+            //     if (data) {
+            //         img = document.getElementById('img-' + element.id);
+            //         img.src = URL.createObjectURL(data);
+            //     }
+            // })
 
 
         });
@@ -32,7 +32,7 @@ fetchRequest(urlSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getC
 });
 fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allVaccines = data
@@ -71,7 +71,7 @@ function createSheepTds(sheep) {
           <td>${sheep.description}</td>
           <td>${sheep.weight}Kg</td>
           <td>${sheep.sex}</td>
-          <td ><img width='100px' class="img" id="img-${sheep.id}" /> </td>
+          <td ><img width='100px' class="img" id="img-${sheep.id}" src='${urlSheep+"getImage/"+sheep.photo}' /> </td>
           <td>${(sheep.isAcquisition)?"Sí":"No"}</td>
           <td>${birthDate}</td>
           <td>${(sheep.isAcquisition)?"$"+sheep.kiloPrice:"NA"}</td>

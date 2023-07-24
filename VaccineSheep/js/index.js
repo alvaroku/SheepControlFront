@@ -27,7 +27,7 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
     newUrl = urlVaccineSheep+"GetVaccineSheepWithFilters"
     fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
         if (error) {
-            showMessage("error","Mensaje","Error al cargar los datos")
+            //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             table.innerHTML = ""
@@ -49,7 +49,7 @@ getAllVaccineSheep()
 function getAllVaccineSheep(){
     fetchRequest(urlVaccineSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
-            showMessage("error","Mensaje","Error al cargar los datos")
+            //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             table.innerHTML = ""
@@ -65,7 +65,7 @@ function getAllVaccineSheep(){
 //getVaccines
 fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allVaccines = data
@@ -83,20 +83,26 @@ fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${ge
 //getSheeps
 fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allSheeps = data
 
         options = ""
         options += `<option disabled selected value="0">Seleccione un dato</option>`
+
+        options2 = ""
+        options2 += `<option disabled selected value="0">Seleccione un dato</option>`
+
         data.forEach(element => {
             if(!element.sold){
+                options2 += `<option value="${element.id}">${element.id}</option>`
+             }else{
                 options += `<option value="${element.id}">${element.id}</option>`
-            }
+             }
         }); 
         filterCriteriaForm.sheepId.innerHTML = options
-        createForm.sheepId.innerHTML = options
+        createForm.sheepId.innerHTML = options2
     }
 });
 createForm.vaccineId.addEventListener('change',(e)=>{

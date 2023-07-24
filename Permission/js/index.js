@@ -8,7 +8,7 @@ objToUpdate = null
 
 fetchRequest(urlPermission, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         table.innerHTML = ""
@@ -22,7 +22,7 @@ fetchRequest(urlPermission, { method: 'GET' ,headers:{"Authorization": `Bearer $
 });
 fetchRequest(urlController, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allControllers = data
@@ -37,7 +37,7 @@ fetchRequest(urlController, { method: 'GET' ,headers:{"Authorization": `Bearer $
 });
 fetchRequest(urlAction, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allActions = data

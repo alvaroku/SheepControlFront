@@ -172,13 +172,13 @@
                                     <div class="modal-body">
                                         <form id="createForm" action="#">
                                             <div class="form-group">
-                                                <label for="roleId">Rol:</label>
-                                                <select class="form-control" id="roleId" name="roleId">
+                                                <label for="userId">Usuario:</label>
+                                                <select class="form-control" id="userId" name="userId">
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="userId">Usuario:</label>
-                                                <select class="form-control" id="userId" name="userId">
+                                                <label for="roleId">Rol:</label>
+                                                <select multiple class="form-control" id="roleId" name="roleId">
                                                 </select>
                                             </div>
                                             <p id="error" class="danger"></p>
@@ -210,16 +210,15 @@
                                     <div class="modal-body">
                                         <form id="updateForm" action="#">
                                             <div class="form-group">
+                                                <label for="userId">Usuario:</label>
+                                                <select disabled class="form-control" id="userId" name="userId">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="roleId">Rol:</label>
                                                 <select class="form-control" id="roleId" name="roleId">
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="userId">Usuario:</label>
-                                                <select class="form-control" id="userId" name="userId">
-                                                </select>
-                                            </div>
-
                                             <p id="error" class="danger"></p>
                                         </form>
                                     </div>

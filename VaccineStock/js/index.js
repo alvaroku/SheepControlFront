@@ -8,7 +8,7 @@ objToUpdate = null
 
 fetchRequest(urlVaccineStock, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         document.getElementById("error").innerHTML = ""
@@ -24,7 +24,7 @@ fetchRequest(urlVaccineStock, { method: 'GET' ,headers:{"Authorization": `Bearer
 //getVaccines
 fetchRequest(urlVaccine, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
     if (error) {
-        showMessage("error","Mensaje","Error al cargar los datos")
+        //showMessage("error","Mensaje","Error al cargar los datos")
         console.log(error);
     } else {
         allVaccines = data

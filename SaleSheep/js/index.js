@@ -25,7 +25,7 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
     newUrl = urlSaleSheep+"GetWithFilters"
     fetchRequest(newUrl, { method: 'POST', body: JSON.stringify(objeto) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
         if (error) {
-            showMessage("error","Mensaje","Error al cargar los datos")
+            //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             table.innerHTML = ""
@@ -47,7 +47,7 @@ getAllSaleSheep()
 function getAllSaleSheep(){
     fetchRequest(urlSaleSheep, { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
-            showMessage("error","Mensaje","Error al cargar los datos")
+            //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             table.innerHTML = ""
@@ -65,7 +65,7 @@ getSheeps()
 function getSheeps(){
     fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Authorization": `Bearer ${getCookie("auth")}`}}, function (error, data) {
         if (error) {
-            showMessage("error","Mensaje","Error al cargar los datos")
+            //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
             allSheeps = data

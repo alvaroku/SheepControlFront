@@ -52,7 +52,7 @@
                 btnRequest.style.display=""
                 loading.style.display = "none"
                 if (error) {
-                    showMessage("error","Mensaje","Ocurrió un error al registrar")
+                    //showMessage("error","Mensaje","Ocurrió un error al registrar")
                     console.log(error);
                 } else {
                     tds = createSheepTds(data.data)
@@ -65,7 +65,7 @@
                         }
                     })
 
-                    showMessage("success","Mensaje","Registro creado")
+                    showMessage("success","Mensaje",data.message)
                     allSheeps.push(data.data)
                     createForm.reset()
                     e.target.kiloPrice.disabled = true

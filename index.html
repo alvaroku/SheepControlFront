@@ -15,10 +15,11 @@
 </head>
 
 <style>
-    #grafica{
-    max-width: 500px;
+    #grafica {
+        max-width: 500px;
     }
 </style>
+
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
@@ -42,7 +43,7 @@
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Perfil</a></li>
-                     <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
+                    <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -168,45 +169,52 @@
     <script src="extras/logout.js"></script>
 
     <script>
-        // Obtener una referencia al elemento canvas del DOM
-        const $grafica = document.querySelector("#grafica");
-        // Las etiquetas son las porciones de la gráfica
-        const etiquetas = ["Ventas", "Compras", "Trabajos", "Publicidad"]
-        // Podemos tener varios conjuntos de datos. Comencemos con uno
-        const datosIngresos = {
-            data: [1500, 400, 2000, 7000], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-            // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
-            backgroundColor: [
-                'rgba(163,221,203,0.2)',
-                'rgba(232,233,161,0.2)',
-                'rgba(230,181,102,0.2)',
-                'rgba(229,112,126,0.2)',
-            ],// Color de fondo
-            borderColor: [
-                'rgba(163,221,203,1)',
-                'rgba(232,233,161,1)',
-                'rgba(230,181,102,1)',
-                'rgba(229,112,126,1)',
-            ],// Color del borde
-            borderWidth: 1,// Ancho del borde
-        };
-        // new Chart($grafica, {
-        //     type: 'pie',// Tipo de gráfica. Puede ser dougnhut o pie
-        //     data: {
-        //         labels: etiquetas,
-        //         datasets: [
-        //             datosIngresos,
-        //             // Aquí más datos...
-        //         ]
-        //     },
-        // });
+        fetchRequest(urlGraphic + "GetDataGraphicSheepPurchaseExpenseProfits", { method: 'GET', headers: { "Authorization": `Bearer ${getCookie("auth")}` } }, function (error, data) {
+            if (error) {
+                showMessage("error", "Mensaje", "Error al cargar los datos")
+                console.log(error);
+            } else {
+                // Obtener una referencia al elemento canvas del DOM
+                const $grafica = document.querySelector("#grafica");
+                // Las etiquetas son las porciones de la gráfica
+                const etiquetas = ["Gastos", "Ganancias"]
+                // Podemos tener varios conjuntos de datos. Comencemos con uno
+                const datosIngresos = {
+                    data: [data.data.purchaseExpense, data.data.profits], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+                    // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
+                    backgroundColor: [
+                        'rgba(229,112,126,0.2)',
+                        'rgba(230,181,102,0.2)',
+                    ],// Color de fondo
+                    borderColor: [
+                        'rgba(229,112,126,1)',
+                        'rgba(230,181,102,1)',  
+                    ],// Color del borde
+                    borderWidth: 1,// Ancho del borde
+                };
+                new Chart($grafica, {
+                    type: 'pie',// Tipo de gráfica. Puede ser dougnhut o pie
+                    data: {
+                        labels: etiquetas,
+                        datasets: [
+                            datosIngresos,
+                            // Aquí más datos...
+                        ]
+                    },
+                });
+            }
+        });
+        //
+
+
+
     </script>
 
 
     <script>
         if (!getCookie("auth")) {
             window.location.href = "/login.html"
-        } 
+        }
         verifyLogin()
     </script>
 </body>

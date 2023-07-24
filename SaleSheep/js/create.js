@@ -23,7 +23,7 @@ createForm.addEventListener("submit", (e) => {
         btnRequest.style.display=""
                 loading.style.display = "none"
         if (error) {
-            showMessage("error","Mensaje","Ocurrió un error al registrar")
+            //showMessage("error","Mensaje","Ocurrió un error al registrar")
             console.log(error);
         } else {
             showMessage("success","Mensaje",data.message)
