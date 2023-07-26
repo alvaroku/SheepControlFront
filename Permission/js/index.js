@@ -50,6 +50,22 @@ fetchRequest(urlAction, { method: 'GET' ,headers:{"Authorization": `Bearer ${get
         updateForm.actionId.innerHTML = options  
     }
 });
+createForm.controllerId.addEventListener("change",(e)=>{
+    createForm.actionId.disabled=false
+    selectElement = createForm.actionId
+    selectElement.options[0].selected = false
+    for (var i = 1; i < selectElement.options.length; i++) {
+      option = selectElement.options[i];
+      find =  allData.find(function (elemento) {
+            return elemento.controllerId == e.target.value && elemento.actionId ==option.value ;
+        });
+        if(find != undefined){
+            option.selected = true
+        }else{
+            option.selected = false
+        }   
+    }
+})
 function createPermissionTds(data) {
     creationDate = formatDate(data.creationDate,true)
     modificationDate = formatDate(data.modificationDate,true)

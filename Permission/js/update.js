@@ -1,8 +1,8 @@
 ////////////////SheepUpdate///////////////
 function update(id) {
     objToUpdate = findInArray(allData,id)
-    updateForm.clave.value = objToUpdate.clave
-    updateForm.description.value = objToUpdate.description
+    //updateForm.clave.value = objToUpdate.clave
+    //updateForm.description.value = objToUpdate.description
     updateForm.controllerId.value = objToUpdate.controller.id
     updateForm.actionId.value = objToUpdate.action.id
 }
@@ -11,7 +11,7 @@ function update(id) {
 
             data = {
                 clave:"",
-                description: updateForm.description.value,
+                description: "",//updateForm.description.value,
                 controllerId:updateForm.controllerId.value,
                 actionId:updateForm.actionId.value
             }
