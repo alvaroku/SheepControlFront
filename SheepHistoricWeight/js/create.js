@@ -1,5 +1,10 @@
 createForm.addEventListener("submit",(e)=>{
     e.preventDefault()
+
+    if(e.target.sheepId.value == 0){
+        showMessage("error","Captura de datos","Debe seleccionar un carnero.")
+        return
+    }
     data = {
         sheepId: e.target.sheepId.value,
         weighingDate: e.target.weighingDate.value,

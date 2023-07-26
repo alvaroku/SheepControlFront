@@ -19,11 +19,20 @@
         createForm.addEventListener("submit", (e) => {
             e.preventDefault()
 
-             
+            // if(e.target.sheepId.value == 0){
+            //     showMessage("error","Captura de datos","Debe seleccionar por lo menos 1 carnero.")
+            //     return
+            // }
 
 
             // Obtener la imagen del input de tipo file
             const file = createForm.photo.files[0];
+
+            if(!file){
+                showMessage("error","Captura de datos","Debe seleccionar una foto.")
+                return
+            }
+
             // Crear un objeto FormData y agregar la imagen a él
             const formData = new FormData();
 

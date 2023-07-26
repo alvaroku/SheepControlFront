@@ -1,6 +1,11 @@
 createForm.addEventListener("submit", (e) => {
     e.preventDefault()
 
+    if(e.target.sheepId.value == 0){
+        showMessage("error","Captura de datos","Debe seleccionar por lo menos 1 carnero.")
+        return
+    }
+
     selectElement = createForm.sheepId
     selectedValues = [];
     for (var i = 1; i < selectElement.options.length; i++) {

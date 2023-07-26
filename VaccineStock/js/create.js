@@ -1,7 +1,10 @@
 
         createForm.addEventListener("submit", (e) => {
             e.preventDefault()
-
+            if(e.target.vaccineId.value == 0){
+                showMessage("error","Captura de datos","Debe seleccionar una vacuna.")
+                return
+            }
             objeto = {
                 acquisitionDate:e.target.acquisitionDate.value,
                 vaccineId: e.target.vaccineId.value,

@@ -166,3 +166,11 @@ function verifyLogin(){
 //     deleteCookie("auth")
 //     deleteInfoUSer()
 // })
+function quitarRequired(element) {
+    element.removeAttribute('required');
+  }
+  
+  function ponerRequired(element) {
+    element.setAttribute('required', 'required');
+  }
+  

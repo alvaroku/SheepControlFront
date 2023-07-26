@@ -139,7 +139,7 @@
                                             <th>Descripción</th>
                                             <th>Peso</th>
                                             <th>Sexo</th>
-                                            <th>Photo</th>
+                                            <th>Foto</th>
                                             <th>Es adquisición</th>
                                             <th>Fecha de nacimiento/Adquisición</th>
                                             <th>Precio x kilo</th>
@@ -173,15 +173,15 @@
                                         <form id="createForm" action="#">
                                             <div class="form-group">
                                                 <label for="birthDate">Fecha de nacimiento/Adquisición:</label>
-                                                <input type="date" class="form-control" id="birthDate" name="birthDate">
+                                                <input required type="date" class="form-control" id="birthDate" name="birthDate">
                                             </div>
                                             <div class="form-group">
                                                 <label for="weight">Peso(KG):</label>
-                                                <input step=".1" type="number" class="form-control" id="weight" name="weight">
+                                                <input required step=".1" type="number" class="form-control" id="weight" name="weight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Descripción:</label>
-                                                <textarea class="form-control" id="description"
+                                                <textarea required class="form-control" id="description"
                                                     name="description"></textarea>
                                             </div>
                                             <div class="form-group">
@@ -192,7 +192,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="photo">Photo:</label>
+                                                <label for="photo">Foto:</label>
                                                 <input accept="image/jpeg" type="file" class="form-control" id="photo"
                                                     name="photo">
                                                 <img class="img" width="100px" id="currentSelectedPhoto">
@@ -248,15 +248,15 @@
                                         <form id="updateForm" action="#">
                                             <div class="form-group">
                                                 <label for="birthDate">Fecha de nacimiento/Adquisición:</label>
-                                                <input type="date" class="form-control" id="birthDate" name="birthDate">
+                                                <input required type="date" class="form-control" id="birthDate" name="birthDate">
                                             </div>
                                             <div class="form-group">
                                                 <label for="weight">Peso(KG):</label>
-                                                <input step=".1" type="number" class="form-control" id="weight" name="weight">
+                                                <input required step=".1" type="number" class="form-control" id="weight" name="weight">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Descripción:</label>
-                                                <textarea class="form-control" id="description"
+                                                <textarea required class="form-control" id="description"
                                                     name="description"></textarea>
                                             </div>
                                             <div class="form-group">
@@ -267,7 +267,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="photo">Photo:</label>
+                                                <label for="photo">Foto:</label>
                                                 <input accept="image/jpeg" type="file" class="form-control" id="photo"
                                                     name="photo">
                                                 <p>Foto actual</p>
@@ -286,7 +286,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="acquisitionCost">Costo de adquisición:</label>
-                                                <input disabled type="number" class="form-control" id="acquisitionCost"
+                                                <input  disabled type="number" class="form-control" id="acquisitionCost"
                                                     name="acquisitionCost">
                                             </div>
                                             <p id="error" class="danger"></p>

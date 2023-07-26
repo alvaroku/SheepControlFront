@@ -14,9 +14,10 @@ function update(id) {
 
     if(sheep.isAcquisition){
         updateForm.kiloPrice.disabled = false
-        updateForm.acquisitionCost.disabled = false
+        // updateForm.acquisitionCost.disabled = false
         updateForm.kiloPrice.value = sheep.kiloPrice
         updateForm.acquisitionCost.value = sheep.acquisitionCost
+        ponerRequired(updateForm.kiloPrice)
     }
 
     img = document.getElementById("img-" + id)
@@ -85,12 +86,7 @@ function update(id) {
                     tr.innerHTML = createSheepTds(data.data)
                     
                     if (file) {
-                        requestImage(urlSheep + "GetImage/" + data.data.photo, function (error, dataImg) {
-                            if (dataImg) {
-                                const img = document.getElementById("img-" + data.data.id);
-                                img.src = URL.createObjectURL(dataImg);
-                            }
-                        })
+                         
 
                     } else {
                         const img = document.getElementById("img-" + data.data.id);
@@ -151,8 +147,9 @@ function update(id) {
         updateForm.isAcquisition.addEventListener("click",(e)=>{
             if(e.target.checked){
                 updateForm.kiloPrice.disabled = false
-                updateForm.acquisitionCost.disabled = false
-
+                // updateForm.acquisitionCost.disabled = false
+                ponerRequired(updateForm.kiloPrice)
+                ponerRequired(updateForm.acquisitionCost)
                 if(objToUpdate.isAcquisition){
                     updateForm.acquisitionCost.value = updateForm.weight.value * objToUpdate.kiloPrice
                     updateForm.kiloPrice.value = objToUpdate.kiloPrice
@@ -165,6 +162,8 @@ function update(id) {
                     updateForm.acquisitionCost.disabled = true
                     updateForm.kiloPrice.value = ""
                     updateForm.acquisitionCost.value = ""
+                    quitarRequired(updateForm.kiloPrice)
+                quitarRequired(updateForm.acquisitionCost)
             }
         })
         updateForm.kiloPrice.addEventListener("change",(e)=>{

@@ -106,12 +106,16 @@ function getIndicatedDoseString(indicatedDose){
 createForm.isAcquisition.addEventListener("click",(e)=>{
     if(e.target.checked){
         createForm.kiloPrice.disabled = false
-        createForm.acquisitionCost.disabled = false
+        // createForm.acquisitionCost.disabled = false
+        ponerRequired(createForm.kiloPrice)
+                ponerRequired(createForm.acquisitionCost)
     }else{
         createForm.kiloPrice.disabled = true
         createForm.acquisitionCost.disabled = true
         createForm.kiloPrice.value = ""
         createForm.acquisitionCost.value = ""
+        quitarRequired(createForm.kiloPrice)
+                quitarRequired(createForm.acquisitionCost)
     }
 })
 createForm.kiloPrice.addEventListener("change",(e)=>{
