@@ -56,9 +56,9 @@ function createSaleSheepTds(vaccineSheep) {
     }
     tr = `<td>${vaccineSheep.id}</td> 
           <td>${vaccineSheep.sheepId}</td>
-          <td>${vaccineSheep.previousWeight}Kg</td>
+
           <td>${vaccineSheep.newWeight}Kg</td>
-          <td>${vaccineSheep.differenceWithPreviousWeight}Kg</td>
+     
           <td>${WeighingDate}</td>
           <td>${creationDate}</td>
           <td>${modificationDate}</td>
