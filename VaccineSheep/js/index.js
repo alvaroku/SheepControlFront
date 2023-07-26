@@ -95,10 +95,12 @@ fetchRequest(urlSheep+"GetSheepsWithFinalWeight", { method: 'GET' ,headers:{"Aut
         options2 += `<option disabled selected value="0">Seleccione un dato</option>`
 
         data.forEach(element => {
-            if(!element.sold){
-                options2 += `<option value="${element.id}">${element.id}</option>`
+            options += `<option value="${element.id}">${element.id}</option>`
+            
+            if(element.sold){
+                
              }else{
-                options += `<option value="${element.id}">${element.id}</option>`
+                options2 += `<option value="${element.id}">${element.id}</option>`
              }
         }); 
         filterCriteriaForm.sheepId.innerHTML = options
