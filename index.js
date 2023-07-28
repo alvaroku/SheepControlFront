@@ -136,10 +136,10 @@ function deleteInfoUSer(){
 
 function verifyLogin(){
     if(getCookie("auth")){
-        data = {
+        dat = {
             token:getCookie("auth")
         }
-        fetchRequest(urlUser+"GetEmailFromToken", { method: 'POST', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
+        fetchRequest(urlUser+"GetEmailFromToken", { method: 'POST', body: JSON.stringify(dat) ,headers: {'Content-Type': 'application/json','Accept': 'application/json',"Authorization": `Bearer ${getCookie('auth')}`}}, function (error, data) {
             if (error) {
                 // if(loginForm){
                 //     loginForm.style.display = ""
