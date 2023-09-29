@@ -41,9 +41,12 @@ createForm.addEventListener("submit", (e) => {
             data.data.forEach(element => {
                 tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
+                totalToCharge+=element.totalCharged
                 allData.push(element)
         });
-            
+        document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
+        Total a cobrar: $${totalToCharge}
+      </div>`
         }
     });
 

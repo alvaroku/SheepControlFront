@@ -4,6 +4,13 @@ function Delete(id) {
         if (error) {
             //showMessage("error","Mensaje","Error al eliminar")
         } else {
+            elementToDelete = findInArray(allData,id)
+            if(totalToCharge>0){
+                totalToCharge-=elementToDelete.totalCharged
+                document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
+            Total a cobrar: $${totalToCharge}
+          </div>`
+            }
             document.getElementById(id).remove();
             showMessage("success","Mensaje",data.message)
             allData = deleteToArray(allData,id)

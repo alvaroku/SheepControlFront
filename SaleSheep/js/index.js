@@ -4,7 +4,7 @@ createForm = document.getElementById("createForm")
 allData = []
 allSheeps = []
 objToUpdate = null
-
+totalToCharge = 0
 filterCriteriaForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     _startDate = e.target.startDate.value
@@ -28,13 +28,18 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
             //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
+            totalToCharge = 0
             table.innerHTML = ""
             document.getElementById("error").innerHTML = ""
             allData = data.data
             data.data.forEach(element => {
+                totalToCharge+=element.totalCharged
                 tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
+            document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
+            Total a cobrar: $${totalToCharge}
+          </div>`
         }
     });
 })
@@ -50,13 +55,18 @@ function getAllSaleSheep(){
             //showMessage("error","Mensaje","Error al cargar los datos")
             console.log(error);
         } else {
+            totalToCharge = 0
             table.innerHTML = ""
             document.getElementById("error").innerHTML = ""
             allData = data.data
             data.data.forEach(element => {
+                totalToCharge+=element.totalCharged
                 tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
+            document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
+            Total a cobrar: $${totalToCharge}
+          </div>`
         }
     });
 }

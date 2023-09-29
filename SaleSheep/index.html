@@ -159,6 +159,7 @@
                         <button id="btnApplyVaccineToAllSheeps" style="width: 50px;" type="button"
                             class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                 class="fas fa-plus"></i></button>
+                                <div style="width: 30%;" id="totalToCharge"></div>
                         <!-- <button style="width: 50px;" type="button" class="btn btn-danger" onclick="deleteAll()"><i
                                 class="fas fa-trash-alt"></i></button> -->
                     </div>
@@ -341,17 +342,20 @@
             window.location = "/"
         }
         searcher.addEventListener("keyup", (e) => {
-            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase() + " " + objeto.vaccine.name.toLowerCase() + "").includes(e.target.value.toLowerCase()));
-
+            dataFitered = allData.filter(objeto => (objeto.sheep.description.toLowerCase() + " " + objeto.sheep.sheepId + "").includes(e.target.value.toLowerCase()));
+            totalToCharge = 0
             allData.forEach(element => {
                 d = findInArray(dataFitered, element.id)
                 if (d == undefined) {
                     document.getElementById(element.id).style.display = "none"
                 } else {
                     document.getElementById(element.id).style.display = ""
+                    totalToCharge+=d.totalCharged
                 }
             });
-
+            document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
+            Total a cobrar: $${totalToCharge}
+          </div>`
         })
         verifyLogin()
     </script>
