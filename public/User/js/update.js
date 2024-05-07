@@ -23,7 +23,7 @@ function update(id) {
             fetchRequest(urlUser + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'
         ,"Authorization": `Bearer ${getCookie("auth")}`} }, function (error, data) {
                 if (error) {
-                    showMessage("error","Mensaje","Error al actualizar")
+                     
                     console.log(error);
                 } else {
                     tr = document.getElementById(data.data.id)

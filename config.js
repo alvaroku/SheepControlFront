@@ -1,8 +1,8 @@
 
-const  baseUrl = "https://sheepcontrolapitesting.azurewebsites.net/api/"
-const  __baseUrl = "https://localhost:7111/api/"
-const  _baseUrl = "https://testersite.somee.com/api/"
-const _cbaseUrl = " http://localhost:5000/api/"
+const  prod_baseUrl = "https://sheepcontrol.azurewebsites.net//api/"
+const  dev_baseUrl = "https://localhost:7111/api/"
+
+const baseUrl = dev_baseUrl
 
 const urlSheep = baseUrl+"Sheep/"
 const urlVaccine = baseUrl+"Vaccine/"

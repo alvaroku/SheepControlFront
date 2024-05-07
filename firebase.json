@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "sheep-control-testing",
     "public": "public",
     "ignore": [
       "firebase.json",
