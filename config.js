@@ -2,7 +2,7 @@
 const  prod_baseUrl = "https://sheepcontrol.azurewebsites.net//api/"
 const  dev_baseUrl = "https://localhost:7111/api/"
 
-const baseUrl = prod_baseUrl
+const baseUrl = dev_baseUrl
 
 const urlSheep = baseUrl+"Sheep/"
 const urlVaccine = baseUrl+"Vaccine/"

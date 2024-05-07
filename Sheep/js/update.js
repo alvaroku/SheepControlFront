@@ -76,7 +76,6 @@ function update(id) {
                 btnRequest1.style.display=""
                 loading1.style.display = "none"
                 if (error) {
-                    showMessage("error","Mensaje","Error al actualizar")
                     console.log(error);
                 } else {
                     tr = document.getElementById(data.data.id)

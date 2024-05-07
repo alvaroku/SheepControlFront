@@ -38,7 +38,7 @@ filterCriteriaForm.addEventListener("submit",(e)=>{
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
             document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
-            Total a cobrar: $${totalToCharge}
+            Total de venta: $${totalToCharge}
           </div>`
         }
     });
@@ -56,17 +56,21 @@ function getAllSaleSheep(){
             console.log(error);
         } else {
             totalToCharge = 0
+            saleProfit = 0
             table.innerHTML = ""
             document.getElementById("error").innerHTML = ""
             allData = data.data
             data.data.forEach(element => {
                 totalToCharge+=element.totalCharged
+                saleProfit+=element.saleProfit
                 tds = createSaleSheepTds(element)
                 table.innerHTML += `<tr id="${element.id}">${tds}</tr>`
             });
-            document.getElementById("totalToCharge").innerHTML = `<div class="alert alert-primary" role="alert">
-            Total a cobrar: $${totalToCharge}
-          </div>`
+            document.getElementById("totalToCharge").innerHTML = 
+            `<div class="alert alert-primary" role="alert">
+                <p>Total de venta: $${totalToCharge}</p>
+                <p>Total de ganancia: $${saleProfit}</p>
+            </div>`
         }
     });
 }
