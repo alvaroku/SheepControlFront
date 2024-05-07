@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "sheepcontrol-ad63e",
+    "site": "sheepcontrol_test-ad63e",
     "public": "public",
     "ignore": [
       "firebase.json",
