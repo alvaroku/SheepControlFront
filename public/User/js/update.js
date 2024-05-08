@@ -6,7 +6,6 @@ function update(id) {
     updateForm.birthDate.value = objToUpdate.birthDate.substring(0, 10)
     updateForm.phoneNumber.value = objToUpdate.phoneNumber
     updateForm.email.value = objToUpdate.email
-    updateForm.password.value = objToUpdate.password
 }
         updateForm.addEventListener("submit", (e) => {
             e.preventDefault()
@@ -17,7 +16,6 @@ function update(id) {
                 birthDate:updateForm.birthDate.value,
                 phoneNumber:updateForm.phoneNumber.value,
                 email:updateForm.email.value,
-                password:updateForm.password.value
             }
         
             fetchRequest(urlUser + objToUpdate.id, { method: 'PUT', body: JSON.stringify(data) ,headers: {'Content-Type': 'application/json','Accept': 'application/json'

@@ -53,7 +53,6 @@ function createUserTds(data) {
         <td>${birthDate}</td>
         <td>${data.phoneNumber}</td>
         <td>${data.email}</td>
-        <td>${data.password}</td>
         <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
