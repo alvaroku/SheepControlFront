@@ -84,6 +84,7 @@ function createPermissionRoleTds(data) {
         <td>${data.role.name}</td> 
         <td>${data.permission.controller.name}</td>
         <td>${data.permission.action.name}</td>
+        <td>${data.permission.description}</td>
         <td>${creationDate}</td>
           <td>${modificationDate}</td>
           <td>${auxActive}</td>
